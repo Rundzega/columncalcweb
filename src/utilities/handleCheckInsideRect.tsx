@@ -1,6 +1,6 @@
 import React from 'react';
-import { RectangleList, RebarList } from '../../contexts/CrossSectionContext';
-import errorMsg from '../ErrorMsg';
+import { RectangleList, RebarList } from '../contexts/CrossSectionContext';
+import errorMsg from './errorMsg';
 
 type RebarProps = {
     diameter: number,

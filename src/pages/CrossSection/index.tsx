@@ -1,9 +1,8 @@
-import React, { SVGProps, useEffect, useRef, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import AddButton from '../../components/AddButton';
 import RemoveButton from '../../components/RemoveButton';
-import { useCrossSectionContext } from '../../hooks/useCrossSectionContext';
 import '../../styles/cross-section.scss'
-import errorMsg from '../../utilities/ErrorMsg';
+import errorMsg from '../../utilities/errorMsg';
 import handleValidateNumber from '../../utilities/handleValidateNumber';
 import handleValidatePositive from '../../utilities/handleValidatePositive';
 import { select } from 'd3-selection'
@@ -11,12 +10,12 @@ import { transition } from 'd3-transition'
 import handleCheckRectOverlap from '../../utilities/handleCheckOverlap';
 import handleCheckInsideRect from '../../utilities/handleCheckInsideRect';
 import { axisBottom, axisLeft, scaleLinear } from 'd3';
-import { RectangleList } from '../../contexts/CrossSectionContext';
+import { useReducerContext } from '../../hooks/useReducerContext';
 
 
 function CrossSection() {
     
-    const { rectangleList, setRectangleList, rebarList, setRebarList, state, dispatch } = useCrossSectionContext();
+    const { state,  dispatch } = useReducerContext();
     
     const [rectProps, setRectProps] = useState({
         width: 25,
@@ -28,12 +27,8 @@ function CrossSection() {
     const [rebarProps, setRebarProps] = useState({
         diameter: 5.0,
         xCoord: 0,
-        yCoord: 0
-        
+        yCoord: 0    
     })
-
-    const [selectedRectRow, setSelectedRectRow] = useState<HTMLTableRowElement | null>()
-    const [selectedRebarRow, setSelectedRebarRow] = useState<HTMLTableRowElement | null>()
         
     const crossSectionSvg = useRef<SVGSVGElement | null>(null)
     const rectTable = useRef<HTMLTableSectionElement | null>(null)
@@ -54,7 +49,7 @@ function CrossSection() {
         svg.append('g').attr('id', 'rebars')
         svg.append('g').attr('id', 'axis')
         
-        {Object.values(rectangleList).map((rectangle) => {
+        {Object.values(state.rectangleList).map((rectangle) => {
             
             const classStyle = rectangle.isHighlighted ? 'svgSelect' : 'svgElementRect'
 
@@ -66,16 +61,17 @@ function CrossSection() {
             .attr('y', -rectangle.yCenterCoordinate - rectangle.height/2)
             .attr('id', rectangle.index)
             .attr('class', `${classStyle}`)
-            .on('mouseover', function(d, i) {
+            .on('mouseover', function() {
                 select(this)
                 .attr('x', `${rectangle.xCenterCoordinate - rectangle.width/2 - 0.05*rectangle.width}`)
                 .attr('y', `${-rectangle.yCenterCoordinate - rectangle.height/2 - 0.05*rectangle.height}`)
                 .attr('width', `${1.10*rectangle.width}`)
                 .attr('height', `${1.10*rectangle.height}`)
+                .style('cursor', 'pointer')
                 .raise()
                 .transition('150')
             })
-            .on('mouseleave', function(d, i) {
+            .on('mouseleave', function() {
                 select(this)
                 .attr('width', rectangle.width)
                 .attr('height', rectangle.height)
@@ -83,38 +79,8 @@ function CrossSection() {
                 .attr('y', -rectangle.yCenterCoordinate - rectangle.height/2)
                 .transition('150')
             })
-            .on('click', function(d, i) {
-
-                const table = Array.from(rectTable.current?.children as HTMLCollection)
-                const rowList = table.filter((tableElement) => {
-                    return tableElement.id == this.id
-                })
-                const row = rowList[0] as HTMLTableRowElement
-
-                if(selectedRectRow?.id == this.id) {
-                    setSelectedRectRow(null)
-                    const unhighlightedRectList = [...rectangleList]
-                    unhighlightedRectList.map((rectangle) => {
-                        rectangle.isHighlighted = false
-                    })
-
-                    setRectangleList(unhighlightedRectList)
-                } else {
-                    setSelectedRectRow(row)
-                    
-                    const unhighlightedRectList = [...rectangleList]
-                    unhighlightedRectList.map((rectangle) => {
-                        rectangle.isHighlighted = rectangle.index == parseInt(row.id as string) ? true : false
-                    })
-                    setRectangleList(unhighlightedRectList)
-                    
-                    setSelectedRebarRow(null)
-                    const unhighlightedRebarList = [...rebarList]
-                    unhighlightedRebarList.map((rebar) => {
-                        rebar.isHighlighted = false
-                    })
-                    setRebarList(unhighlightedRebarList)
-                }
+            .on('click', function(this) {
+                dispatch({type:'select-element', payload:{element:this}})
             })
 
             rectXVertices = [...rectXVertices,
@@ -159,12 +125,12 @@ function CrossSection() {
             }
         }
         
-        if (rectangleList.length > 0 ) {
+        if (state.rectangleList.length > 0 ) {
             svg.attr('viewBox', `${viewBoxParams.x} ${viewBoxParams.y} ${viewBoxParams.width} ${viewBoxParams.heigth}`)
 
         }
         
-        {Object.values(rebarList).map((rebar) => {
+        {Object.values(state.rebarList).map((rebar) => {
             
             const classStyle = rebar.isHighlighted ? 'svgSelect' : 'svgElementRebar'
             
@@ -176,48 +142,19 @@ function CrossSection() {
             .attr('id', rebar.index)
             .attr('class', `${classStyle}`)
             .on('mouseover', function(d, i) {
-                select(this).attr('r', `${1.5*rebar.diameter/20}`).transition('150')
+                select(this)
+                .attr('r', `${1.5*rebar.diameter/20}`).transition('150')
+                .style('cursor', 'pointer')
             })
             .on('mouseleave', function(d, i ) {
                 select(this).attr('r', `${rebar.diameter/20}`).transition('150')
             })
-            
-            .on('click', function(d, i) {
-
-                const table = Array.from(rebarTable.current?.children as HTMLCollection)
-                const rowList = table.filter((tableElement) => {
-                    return tableElement.id == this.id
-                })
-                const row = rowList[0] as HTMLTableRowElement
-
-                if(selectedRebarRow?.id == this.id) {
-                    setSelectedRebarRow(null)
-                    const unhighlightedRebarList = [...rebarList]
-                    unhighlightedRebarList.map((rebar) => {
-                        rebar.isHighlighted = false
-                    })
-
-                    setRebarList(unhighlightedRebarList)
-                } else {
-                    setSelectedRebarRow(row)
-                    const unhighlightedRebarList = [...rebarList]
-                    unhighlightedRebarList.map((rebar) => {
-                        rebar.isHighlighted = rebar.index == parseInt(row.id as string) ? true : false
-                    })
-                    setRebarList(unhighlightedRebarList)
-
-                    setSelectedRectRow(null)
-                    const unhighlightedRectList = [...rectangleList]
-                    unhighlightedRectList.map((rectangle) => {
-                        rectangle.isHighlighted = false
-                    })
-
-                    setRectangleList(unhighlightedRectList)
-                }
+            .on('click', function(this) {
+                dispatch({type:'select-element', payload:{element:this}})
             })
         })}
         
-        if (rectangleList.length > 0) {
+        if (state.rectangleList.length > 0) {
             const xScale = scaleLinear()
                         .domain([viewBoxParams.x, (viewBoxParams.x + viewBoxParams.width)])
                         .range([viewBoxParams.x, (viewBoxParams.x + viewBoxParams.width)])
@@ -241,7 +178,7 @@ function CrossSection() {
                 .style('stroke-width', '0.1px')
                 .call(axisLeft(yScale).tickSizeInner(tickScale).tickSize(tickScale).tickPadding(1))
         }
-    }, [rectangleList, rebarList])
+    }, [state.rectangleList, state.rebarList])
 
     return (
         <>
@@ -316,17 +253,16 @@ function CrossSection() {
                                 <AddButton
                                 onClick={() => {
                                     if (rectProps.width > 0 && rectProps.height > 0 && !Number.isNaN(rectProps.xCoord) && !Number.isNaN(rectProps.yCoord) ) {
-                                        if (!handleCheckRectOverlap(rectProps, rectangleList)) {
-        
-                                            setRectangleList([...rectangleList, {
-                                                index: state.rectIndex,
+                                        if (!handleCheckRectOverlap(rectProps, state.rectangleList)) {
+
+                                            dispatch({type:'add-rectangle', payload: {
+                                                index: state.elementCounter,
                                                 width: rectProps.width,
                                                 height: rectProps.height,
                                                 xCenterCoordinate: rectProps.xCoord,
                                                 yCenterCoordinate: rectProps.yCoord,
                                                 isHighlighted: false
-                                            }])
-                                            dispatch({type:'increment-rect-index'})
+                                            }})
                                         }
                                     } else {
                                         errorMsg('Dados do retângulo inválidos')
@@ -337,7 +273,7 @@ function CrossSection() {
                         </div>
                         <div className="table">
                             <div className="table-content first">
-                                <table className={`table-class ${rectangleList.length > 5 ? 'long' : 'short'}`}>
+                                <table className={`table-class ${state.rectangleList.length > 5 ? 'long' : 'short'}`}>
                                     <thead>
                                         <tr>
                                             <th>Largura</th>
@@ -347,38 +283,13 @@ function CrossSection() {
                                         </tr>
                                     </thead>
                                     <tbody className='table-body' ref={rectTable}>
-                                        {rectangleList.map((rectangle) => {
+                                        {state.rectangleList.map((rectangle) => {
                                             return(
                                                 <tr 
                                                 key = {rectangle.index}
                                                 id = {String(rectangle.index)}
                                                 onClick={(e) => {
-                                                    const row = e.currentTarget
-
-                                                    if(selectedRectRow?.id == e.currentTarget.id) {
-                                                        setSelectedRectRow(null)
-                                                        const unhighlightedRectList = [...rectangleList]
-                                                        unhighlightedRectList.map((rectangle) => {
-                                                            rectangle.isHighlighted = false
-                                                        })
-
-                                                        setRectangleList(unhighlightedRectList)
-                                                    } else {
-                                                        setSelectedRectRow(row)
-                                                        const unhighlightedRectList = [...rectangleList]
-                                                        unhighlightedRectList.map((rectangle) => {
-                                                            rectangle.isHighlighted = rectangle.index == parseInt(row.id as string) ? true : false
-                                                        })
-
-                                                        setRectangleList(unhighlightedRectList)
-
-                                                        setSelectedRebarRow(null)
-                                                        const unhighlightedRebarList = [...rebarList]
-                                                        unhighlightedRebarList.map((rebar) => {
-                                                            rebar.isHighlighted = false
-                                                        })
-                                                        setRebarList(unhighlightedRebarList)
-                                                    }
+                                                    dispatch({type:'select-element', payload:{element: e.currentTarget}})
                                                 }}
                                                 className = {rectangle.isHighlighted ? 'selected' : ''}>
                                                     <td>{rectangle.width}</td>
@@ -394,49 +305,7 @@ function CrossSection() {
                             <div className="button-class">
                                 <RemoveButton 
                                     onClick={() => {
-
-                                        if (selectedRectRow == null) {
-                                            return
-                                        }
-
-                                        const rectanglesDeletedRow = rectangleList.filter((rectangle) => {
-                                            return (rectangle.index != parseFloat(selectedRectRow?.id as string))
-                                        })
-                                        const deletedRectangleList = rectangleList.filter((rectangle) => {
-                                            return (rectangle.index == parseFloat(selectedRectRow?.id as string))
-                                        })
-                                        
-                                        const deletedRectangle = deletedRectangleList[0]
-                                        const rectLeftVertices = deletedRectangle.xCenterCoordinate - deletedRectangle.width / 2;
-                                        const rectRightVertices = deletedRectangle.xCenterCoordinate + deletedRectangle.width / 2;
-                                        const rectTopVertices = deletedRectangle.yCenterCoordinate + deletedRectangle.height / 2;
-                                        const rectBottomVertices = deletedRectangle.yCenterCoordinate - deletedRectangle.height / 2;
-                                        const rebarListCopy = [...rebarList]
-
-                                        rebarListCopy.forEach((rebar) => {
-
-                                            let isInsideRectangle = false;
-
-                                            const rebarLeftExtreme = rebar.xCenterCoordinate - rebar.diameter / 20;
-                                            const rebarRightExtreme = rebar.xCenterCoordinate + rebar.diameter / 20;
-                                            const rebarTopExtreme = rebar.yCenterCoordinate + rebar.diameter / 20;
-                                            const rebarBottomExtreme = rebar.yCenterCoordinate - rebar.diameter / 20;
-                      
-                                            if (rectLeftVertices <= rebarLeftExtreme &&
-                                                rectRightVertices >= rebarRightExtreme &&
-                                                rectBottomVertices <= rebarBottomExtreme &&
-                                                rectTopVertices >= rebarTopExtreme) {
-                                    
-                                                rebar.isInsideRectangle = false
-                                            }
-                                        })
-
-                                        const rebarListAfterDelete = rebarListCopy.filter((rebar) => {
-                                            return (rebar.isInsideRectangle == true)
-                                        })
-
-                                        setRebarList(rebarListAfterDelete)
-                                        setRectangleList(rectanglesDeletedRow)
+                                        dispatch({type:'remove-rectangle'})
                                     }}
                                 />
                             </div>
@@ -504,17 +373,16 @@ function CrossSection() {
                                     onClick={() => {
 
                                     if (rebarProps.diameter > 0 && !Number.isNaN(rebarProps.xCoord) && !Number.isNaN(rebarProps.yCoord)) {
-                                        if (handleCheckInsideRect(rebarProps, rebarList, rectangleList)) {
+                                        if (handleCheckInsideRect(rebarProps, state.rebarList, state.rectangleList)) {
 
-                                            setRebarList([...rebarList, {
-                                                index: state.rebarIndex,
+                                            dispatch({type:'add-rebar', payload: {
+                                                index: state.elementCounter,
                                                 diameter: rebarProps.diameter,
                                                 xCenterCoordinate: rebarProps.xCoord,
                                                 yCenterCoordinate: rebarProps.yCoord,
                                                 isHighlighted: false,
                                                 isInsideRectangle: true
-                                            }])
-                                            dispatch({type:'increment-rebar-index'})
+                                            }})
                                         }
                                     } else {
                                         errorMsg('Dados da barra inválidos')
@@ -526,7 +394,7 @@ function CrossSection() {
                         </div>
                         <div className="table">
                             <div className="table-content second">
-                                <table className={`table-class ${rectangleList.length > 4 ? 'long' : 'short'}`}>
+                                <table className={`table-class ${state.rebarList.length > 4 ? 'long' : 'short'}`}>
                                     <thead>
                                         <tr>
                                             <th>Diâmetro</th>
@@ -535,38 +403,13 @@ function CrossSection() {
                                         </tr>
                                     </thead>
                                     <tbody className='table-body' ref={rebarTable}>
-                                        {rebarList.map((rebar) => {
+                                        {state.rebarList.map((rebar) => {
                                         return(
                                             <tr 
                                             key = {rebar.index}
                                             id = {String(rebar.index)}
                                             onClick={(e) => {
-                                                const row = e.currentTarget
-
-                                                if(selectedRebarRow?.id == e.currentTarget.id) {
-                                                    setSelectedRebarRow(null)
-                                                    const unhighlightedRebarList = [...rebarList]
-                                                    unhighlightedRebarList.map((rebar) => {
-                                                        rebar.isHighlighted = false
-                                                    })
-                                
-                                                    setRebarList(unhighlightedRebarList)
-                                                } else {
-                                                    setSelectedRebarRow(row)
-                                                    const unhighlightedRebarList = [...rebarList]
-                                                    unhighlightedRebarList.map((rebar) => {
-                                                        rebar.isHighlighted = rebar.index == parseInt(row.id as string) ? true : false
-                                                    })
-                                                    setRebarList(unhighlightedRebarList)
-                                
-                                                    setSelectedRectRow(null)
-                                                    const unhighlightedRectList = [...rectangleList]
-                                                    unhighlightedRectList.map((rectangle) => {
-                                                        rectangle.isHighlighted = false
-                                                    })
-                                
-                                                    setRectangleList(unhighlightedRectList)
-                                                }
+                                                dispatch({type:'select-element', payload:{element: e.currentTarget}})
                                             }}
                                             className = {rebar.isHighlighted ? 'selected' : ''}
                                             >
@@ -582,15 +425,7 @@ function CrossSection() {
                             <div className="button-class">
                                 <RemoveButton
                                     onClick={() => {
-
-                                        if (selectedRebarRow == null) {
-                                            return
-                                        }
-
-                                        const rebarsDeletedRow = rebarList.filter((rebar) => {
-                                            return (rebar.index != parseFloat(selectedRebarRow?.id as string))
-                                        })
-                                        setRebarList(rebarsDeletedRow)
+                                        dispatch({type: 'remove-rebar'})
                                     }}
                                 />
                             </div>

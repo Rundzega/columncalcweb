@@ -1,5 +1,5 @@
 import React from 'react';
-import errorMsg from '../ErrorMsg';
+import errorMsg from './errorMsg';
 
 
 const handleValidateNumber = (e: React.ChangeEvent<HTMLInputElement>, message?:string) => {

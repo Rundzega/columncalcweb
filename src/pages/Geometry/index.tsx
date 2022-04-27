@@ -5,13 +5,158 @@ import ValidateButton from "../../components/ValidateButton";
 import handleValidatePositive from "../../utilities/handleValidatePositive";
 import { useGeometryContext } from "../../hooks/useGeometryContext";
 import handleValidateNumber from "../../utilities/handleValidateNumber";
+import { useReducerContext } from "../../hooks/useReducerContext";
 
 const columnImg = require("../../assets/images/columnImg.png");
 
 function Geometry() {
 
-  const { length, setLength, bottomLoads, setBottomLoads, topLoads, setTopLoads, bottomRestrictions, setBottomRestrictions, topRestrictions, setTopRestrictions } = useGeometryContext();
+  // const { length, setLength, bottomLoads, setBottomLoads, topLoads, setTopLoads, bottomRestrictions, setBottomRestrictions, topRestrictions, setTopRestrictions } = useGeometryContext();
 
+  const { state, dispatch } = useReducerContext();
+
+  const { 
+    uxRestrictionBottom,
+    uyRestrictionBottom,
+    uzRestrictionBottom,
+    rxRestrictionBottom,
+    ryRestrictionBottom,
+    uxRestrictionTop,
+    uyRestrictionTop,
+    uzRestrictionTop,
+    rxRestrictionTop,
+    ryRestrictionTop,
+    pxdBottomLoad,
+    pydBottomLoad,
+    mxdBottomLoad,
+    mydBottomLoad,
+    fzdTopLoad,
+    hxdTopLoad,
+    hydTopLoad,
+    pxdTopLoad,
+    pydTopLoad,
+    mxdTopLoad,
+    mydTopLoad,
+    } = state;
+
+  const bottomRestrictionsField = {
+    "Ux" : {
+      value: uxRestrictionBottom,
+      stringName: 'uxRestrictionBottom',
+      isEnabled: false
+    },
+    "Uy" : {
+      value: uyRestrictionBottom,
+      stringName: 'uyRestrictionBottom',
+      isEnabled: false
+    },
+    "Uz" : {
+      value: uzRestrictionBottom,
+      stringName: 'uzRestrictionBottom',
+      isEnabled: false
+    },
+    "Rx" : {
+      value: rxRestrictionBottom,
+      stringName: 'rxRestrictionBottom',
+      isEnabled: true
+    },
+    "Ry" : {
+      value: ryRestrictionBottom,
+      stringName: 'ryRestrictionBottom',
+      isEnabled: true
+    },
+  }
+
+  const topRestrictionsField = {
+    "Ux" : {
+      value: uxRestrictionTop,
+      stringName: 'uxRestrictionTop',
+      isEnabled: true
+    },
+    "Uy" : {
+      value: uyRestrictionTop,
+      stringName: 'uyRestrictionTop',
+      isEnabled: true
+    },
+    "Uz" : {
+      value: uzRestrictionTop,
+      stringName: 'uzRestrictionTop',
+      isEnabled: true
+    },
+    "Rx" : {
+      value: rxRestrictionTop,
+      stringName: 'rxRestrictionTop',
+      isEnabled: true
+    },
+    "Ry" : {
+      value: ryRestrictionTop,
+      stringName: 'ryRestrictionTop',
+      isEnabled: true
+    },
+  }
+
+
+  const bottomLoadsField = {
+    "pxd (kN/m)" : {
+      value: pxdBottomLoad,
+      stringName: 'pxdBottomLoad',
+      isEnabled: true
+    },
+    "pyd (kN/m)" : {
+      value: pydBottomLoad,
+      stringName: 'pydBottomLoad',
+      isEnabled: true
+    },
+    "Mxd (kN.m)" : {
+      value: mxdBottomLoad,
+      stringName: 'mxdBottomLoad',
+      isEnabled: true
+    },
+    "Myd (kN.m)" : {
+      value: mydBottomLoad,
+      stringName: 'mydBottomLoad',
+      isEnabled: true
+    }
+  }
+
+  const topLoadsField = {
+    "Fzd (kN)" : {
+      value: fzdTopLoad,
+      stringName: 'pxdTopLoad',
+      isEnabled: true
+    },
+    "Hxd (kN)" : {
+      value: hxdTopLoad,
+      stringName: 'hxdTopLoad',
+      isEnabled: true
+    },
+    "Hyd (kN)" : {
+      value: hydTopLoad,
+      stringName: 'hydTopLoad',
+      isEnabled: true
+    },
+    "pxd (kN/m)" : {
+      value: pxdTopLoad,
+      stringName: 'pxdTopLoad',
+      isEnabled: true
+    },
+    "pyd (kN/m)" : {
+      value: pydTopLoad,
+      stringName: 'pydTopLoad',
+      isEnabled: true
+    },
+    "Mxd (kN.m)" : {
+      value: mxdTopLoad,
+      stringName: 'mxdTopLoad',
+      isEnabled: true
+    },
+    "Myd (kN.m)" : {
+      value: mydTopLoad,
+      stringName: 'mydTopLoad',
+      isEnabled: true
+    }
+  }
+  
 
   return (
     <>
@@ -29,10 +174,10 @@ function Geometry() {
               id="length"
               type="number" 
               required
-              defaultValue={length}           
+              defaultValue={ state.length }           
               onBlur={(e) => {
                 if(handleValidatePositive(e, 'Comprimento deve ser um número positivo')) {
-                  setLength(parseFloat(e.target.value))
+                  dispatch({type: 'field', fieldName: 'length', payload: parseFloat(e.target.value)})
                 }
               }}
               min="0"
@@ -47,56 +192,46 @@ function Geometry() {
             <div className="subtitle">Base</div>
             <form action="#">
 
-              {Object.values(bottomRestrictions).map( (restriction, index) => {
-
-                return(
-                  <div key = {restriction.label} className="input-box">
-                    <input 
-                      type="checkbox"
-                      defaultChecked = {restriction.value ? true : false}
-                      onChange = {(e) => {
-                        const key = (Object.keys(bottomRestrictions)[index])
-
-                        setBottomRestrictions({
-                          ...bottomRestrictions, [key]:{
-                            label: restriction.label,
-                            value: e.target.checked ? true : false,
-                            enabled: restriction.enabled
-                          }
-                        })
-                      }}
-                      disabled = {restriction.enabled ? false : true}
-                      />
-                      <span>{restriction.label}</span>
-                  </div>
-                )
-              })}
+              {Object.entries(bottomRestrictionsField).map(([field, stateProp]) => {
+              
+              return (
+                <div key={field} className="input-box">
+                  <input
+                  type="checkbox"
+                  required
+                  defaultChecked={stateProp.value} 
+                  onChange={(e) => {
+                    
+                    dispatch({type: 'field', fieldName:stateProp.stringName, payload: e.target.checked})}
+                  }
+                  disabled = {stateProp.isEnabled ? false : true}
+                  min = "0" 
+                  />
+                  <span>{field}</span>
+                </div>
+              )
+            })}
 
             </form>
             <div className="subtitle">Topo</div>
             <form action="#">
-              {Object.values(topRestrictions).map( (restriction, index) => {
 
-                return(
-                  <div key = {restriction.label} className="input-box">
-                    <input 
-                      type="checkbox"
-                      defaultChecked = {restriction.value ? true : false}
-                      onChange = {(e) => {
-                        const key = Object.keys(topRestrictions)[index]
-
-                        setTopRestrictions({
-                          ...topRestrictions, [key]:{
-                           
-                            label: restriction.label,
-                            value: e.target.checked ? true : false,
-                            enabled: restriction.enabled
-                          }
-                        })
-                      }}
-                      disabled = {restriction.enabled ? false : true}
+              {Object.entries(topRestrictionsField).map(([field, stateProp]) => {
+                
+                return (
+                  <div key={field} className="input-box">
+                    <input
+                    type="checkbox"
+                    required
+                    defaultChecked={stateProp.value} 
+                    onChange={(e) => {
+                      
+                      dispatch({type: 'field', fieldName:stateProp.stringName, payload: e.target.checked})}
+                    }
+                    disabled = {stateProp.isEnabled ? false : true}
+                    min = "0" 
                     />
-                    <span>{restriction.label}</span>
+                    <span>{field}</span>
                   </div>
                 )
               })}
@@ -109,63 +244,55 @@ function Geometry() {
             <div className="title">Cargas</div>
             <div className="subtitle">Base</div>
             <form action="#">
-              {Object.values(bottomLoads).map((load, index) => {
 
-                return(
-                  <div key = { load.label } className="input-box-loads">
-                    <span>{load.label}</span>
+              {Object.entries(bottomLoadsField).map(([field, stateProp]) => {
+                
+                return (
+                  <div key={field} className="input-box-loads">
+                    <span>{field}</span>
                     <input
-                     type="number" 
-                     required
-                     defaultValue={load.value}
-                     onBlur={(e) => {
-                       
-                      const key = (Object.keys(bottomLoads)[index])
-                      if (handleValidateNumber(e, (`${load.label}` + ' deve ser um número'))) {
-                      
-
-                        setBottomLoads({
-                          ...bottomLoads, [key]:{
-                            label: load.label,
-                            value: parseFloat(e.target.value)
-                          }
-                        })
+                    type="number"
+                    required
+                    defaultValue={stateProp.value} 
+                    onBlur={(e) => {
+                      if(handleValidateNumber(e, (`${field}` + 'deve ser um número positivo'))) {
+                        
+                        dispatch({type: 'field', fieldName:stateProp.stringName, payload: parseFloat(e.currentTarget.value)})
                       }
                     }}
+                    disabled = {stateProp.isEnabled ? false : true}
+                    min = "0" 
                     />
                   </div>
                 )
               })}
+
             </form>
             <div className="subtitle">Topo</div>
             <form action="#">
-              {Object.values(topLoads).map((load, index) => {
 
-                return(
-                  <div key = { load.label } className="input-box-loads">
-                    <span>{load.label}</span>
-                    <input
-                     type="number" 
-                     required
-                     defaultValue={load.value}
-                     onBlur={(e) => {
+              {Object.entries(topLoadsField).map(([field, stateProp]) => {
+                  
+                  return (
+                    <div key={field} className="input-box-loads">
+                      <span>{field}</span>
+                      <input
+                      type="number"
+                      required
+                      defaultValue={stateProp.value} 
+                      onBlur={(e) => {
+                        if(handleValidateNumber(e, (`${field}` + 'deve ser um número positivo'))) {
+                          
+                          dispatch({type: 'field', fieldName:stateProp.stringName, payload: parseFloat(e.currentTarget.value)})
+                        }
+                      }}
+                      disabled = {stateProp.isEnabled ? false : true}
+                      min = "0" 
+                      />
+                    </div>
+                  )
+                })}
 
-                      if (handleValidateNumber(e, (`${load.label}` + ' deve ser um número'))) {
-                      
-                        const key = (Object.keys(topLoads)[index])
-
-                        setTopLoads({
-                          ...topLoads, [key]:{
-                            label: load.label,
-                            value: parseFloat(e.target.value)
-                          }
-                        })
-                      }
-                    }}
-                    />
-                  </div>
-                )
-              })}
             </form>
           </div>
         </div>

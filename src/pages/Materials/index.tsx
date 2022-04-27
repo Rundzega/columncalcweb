@@ -4,6 +4,8 @@ import '../../styles/materials.scss'
 import { useMaterialsContext } from "../../hooks/useMaterialsContext";
 import handleValidatePositive from "../../utilities/handleValidatePositive";
 
+import { useReducerContext } from "../../hooks/useReducerContext";
+
 const concImg = require("../../assets/images/concreteImgCrop.png");
 const steelImg = require("../../assets/images/steelImgCrop.png");
 
@@ -12,7 +14,63 @@ const steelImg = require("../../assets/images/steelImgCrop.png");
 function Materials() {
 
 
-  const { concrete, setConcrete, steel, setSteel } = useMaterialsContext();
+  const { state, dispatch } = useReducerContext();
+
+  const { fck, gammaC, beta, alpha, phi, fyk, gammaS, es, esu } = state
+
+  const concreteFields = {
+    "fck (MPa)" : {
+      variable: fck,
+      stringName: 'fck',
+      isEnabled: true
+    },
+    "γc" : {
+      variable: gammaC,
+      stringName: 'gammaC',
+      isEnabled: true
+    },
+    "β" : {
+      variable: beta,
+      stringName: 'beta',
+      isEnabled: false,
+    },
+    "α" : {
+      variable: alpha,
+      stringName: 'alpha',
+      isEnabled: false
+    },
+    "φ (Coef. Fluência)" : {
+      variable: phi,
+      stringName: 'phi',
+      isEnabled: true
+    }
+  }
+
+  const steelFields = {
+    "fyk (MPa)": {
+      variable: fyk,
+      stringName: 'fyk',
+      isEnabled: true
+    },
+    "γs": {
+      variable: gammaS,
+      stringName: 'gammaS',
+      isEnabled: true
+    },
+    "Es (MPa)": {
+      variable: es,
+      stringName: 'es',
+      isEnabled: false
+    },
+    "εsu": {
+      variable: esu,
+      stringName: 'esu',
+      isEnabled: false
+    },
+  }
+
+
+  const steelProps = ['fyk', 'gammaS', 'es', 'esu']
 
   return (
     <>
@@ -23,29 +81,22 @@ function Materials() {
           <div className="title">Concreto</div>
           <form action="#">
 
-            {Object.values(concrete).map((property, index) => {
-
+            {Object.entries(concreteFields).map(([field, stateProp]) => {
+            
               return (
-                <div key={property.label} className="input-box">
-                  <span>{property.label}</span>
+                <div key={field} className="input-box">
+                  <span>{field}</span>
                   <input
                   type="number"
                   required
-                  defaultValue={property.value} 
+                  defaultValue={stateProp.variable} 
                   onBlur={(e) => {
-                    if(handleValidatePositive(e, (`${property.label}` + 'deve ser um número positivo'))) {
-                      const key = Object.keys(concrete)[index]
-
-                      setConcrete({
-                        ...concrete, [key]:{
-                          label: property.label,
-                          value: parseFloat(e.target.value),
-                          enabled: property.enabled
-                        }
-                      })
+                    if(handleValidatePositive(e, (`${field}` + 'deve ser um número positivo'))) {
+                      
+                      dispatch({type: 'field', fieldName:stateProp.stringName, payload: parseFloat(e.currentTarget.value)})
                     }
                   }}
-                  disabled = {property.enabled ? false : true}
+                  disabled = {stateProp.isEnabled ? false : true}
                   min = "0" 
                   />
                 </div>
@@ -58,34 +109,29 @@ function Materials() {
         <div className="sub-container">
           <div className="title">Aço</div>
           <form action="#">
-            {Object.values(steel).map((property, index) => {
 
+            {Object.entries(steelFields).map(([field, stateProp]) => {
+              
               return (
-                <div key={property.label} className="input-box">
-                  <span>{property.label}</span>
+                <div key={field} className="input-box">
+                  <span>{field}</span>
                   <input
                   type="number"
                   required
-                  defaultValue={property.value} 
+                  defaultValue={stateProp.variable} 
                   onBlur={(e) => {
-                    if(handleValidatePositive(e, (`${property.label}` + 'deve ser um número positivo'))) {
-                      const key = Object.keys(steel)[index]
-
-                      setSteel({
-                        ...steel, [key]:{
-                          label: property.label,
-                          value: parseFloat(e.target.value),
-                          enabled: property.enabled
-                        }
-                      })
+                    if(handleValidatePositive(e, (`${field}` + 'deve ser um número positivo'))) {
+                      
+                      dispatch({type: 'field', fieldName:stateProp.stringName, payload: parseFloat(e.currentTarget.value)})
                     }
                   }}
-                  disabled = {property.enabled ? false : true}
+                  disabled = {stateProp.isEnabled ? false : true}
                   min = "0" 
                   />
                 </div>
               )
             })}
+
           </form>
         </div>
       </div>

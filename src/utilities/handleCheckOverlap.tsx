@@ -1,6 +1,6 @@
 import React from 'react';
-import { RectangleList } from '../../contexts/CrossSectionContext';
-import errorMsg from '../ErrorMsg';
+import { RectangleList } from '../contexts/CrossSectionContext';
+import errorMsg from './errorMsg';
 
 type RectProps = {
     width: number,
