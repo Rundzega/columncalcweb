@@ -1,0 +1,28 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background: #71C562;
+    color: #29292e;
+    z-index: 0;
+}
+
+body, input, button, textarea {
+    font: 400 16px 'Poppins', sans-serif;
+}
+
+span {
+    margin: 0;
+}
+
+input[type=number] {
+    &::-webkit-inner-spin-button,
+    &::-webkit-outer-spin-button {
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        margin: 0;
+    }
+}
