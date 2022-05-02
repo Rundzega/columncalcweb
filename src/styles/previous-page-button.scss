@@ -1,19 +1,19 @@
-.validate {
+.previous {
     width: 100%;
     margin-top: 12px;
     appearance: none;
-    background-color: #8E3A9D;
-    border: 1px solid rgba(27, 31, 35, .15);
+    background-color: #fff;
+    border: 1px solid #8E3A9D;
     border-radius: 66px;
     box-shadow: rgba(27, 31, 35, .1) 0 1px 0;
     box-sizing: border-box;
-    color: #fff;
+    color: #8E3A9D;
     cursor: pointer;
     display: inline-block;
-    font-size: 20px;
+    font-size: 25px;
     font-weight: 600;
-    line-height: 30px;
-    padding: 8px 16px;
+    line-height: 25px;
+    padding: 12px 24px;
     position: relative;
     text-align: center;
     text-decoration: none;
@@ -24,28 +24,29 @@
     white-space: nowrap;
 }
 
-.validate:focus:not(:focus-visible):not(.focus-visible) {
+.previous:focus:not(:focus-visible):not(.focus-visible) {
     box-shadow: none;
     outline: none;
 }
 
-.validate:hover {
-    background-color: #9c32af;
+.previous:hover {
+    background-color: #DCDAD1;
 }
 
-.validate:focus {
+.previous:focus:active {
     box-shadow: rgba(46, 164, 79, .4) 0 0 0 3px;
     outline: none;
 }
 
-.validate:disabled {
-    background-color: #9c32af;
+.previous:disabled {
+    background-color: #DCDAD1;
     border-color: rgba(27, 31, 35, .1);
-    color: rgba(255, 255, 255, .8);
+    color: rgba(87, 83, 83, 0.407);
+    border: 2px solid rgba(87, 83, 83, 0.407);
     cursor: default;
 }
 
-.validate:active {
-    background-color: #9c32af;
+.previous:active {
+    background-color: #fff;
     box-shadow: rgba(20, 70, 32, .2) 0 1px 0 inset;
 }

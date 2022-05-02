@@ -1,11 +1,13 @@
 import React from "react";
 import "../../styles/geometry.scss";
 
-import ValidateButton from "../../components/ValidateButton";
-import handleValidatePositive from "../../utilities/handleValidatePositive";
+import handleValidateMinimum from "../../utilities/handleValidateMinimum";
 import { useGeometryContext } from "../../hooks/useGeometryContext";
 import handleValidateNumber from "../../utilities/handleValidateNumber";
 import { useReducerContext } from "../../hooks/useReducerContext";
+import NextPageButton from "../../components/NextPageButton";
+import PreviousPageButton from "../../components/PreviousPageButton";
+import { Link } from "react-router-dom";
 
 const columnImg = require("../../assets/images/columnImg.png");
 
@@ -122,7 +124,7 @@ function Geometry() {
   const topLoadsField = {
     "Fzd (kN)" : {
       value: fzdTopLoad,
-      stringName: 'pxdTopLoad',
+      stringName: 'fzdTopLoad',
       isEnabled: true
     },
     "Hxd (kN)" : {
@@ -176,7 +178,7 @@ function Geometry() {
               required
               defaultValue={ state.length }           
               onBlur={(e) => {
-                if(handleValidatePositive(e, 'Comprimento deve ser um número positivo')) {
+                if(handleValidateMinimum(e, 1, 'Comprimento deve ser um número positivo')) {
                   dispatch({type: 'field', fieldName: 'length', payload: parseFloat(e.target.value)})
                 }
               }}
@@ -296,8 +298,13 @@ function Geometry() {
             </form>
           </div>
         </div>
-        <div className="submit-button">
-          <ValidateButton />
+        <div className="navigation-buttons">
+          <div className="nav-button">
+              <PreviousPageButton disabled to='' />
+          </div>
+          <div className="nav-button">
+              <NextPageButton to='materials'/>
+          </div>
         </div>
       </div>
     </>

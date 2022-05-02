@@ -2,13 +2,11 @@ import React from 'react';
 import errorMsg from './errorMsg';
 
 
-
-
-const handleValidatePositive = (e: React.ChangeEvent<HTMLInputElement>, message?:string) => {
+const handleValidateMinimum = (e: React.ChangeEvent<HTMLInputElement>, minimumValue:number ,message?:string) => {
     const value = parseFloat(e.target.value)
   
 
-    if (value < 1) {
+    if (value < minimumValue) {
   
         errorMsg(message);
         e.target.setAttribute('class', 'invalid')
@@ -28,4 +26,4 @@ const handleValidatePositive = (e: React.ChangeEvent<HTMLInputElement>, message?
 
 }
 
-export default handleValidatePositive;
+export default handleValidateMinimum;

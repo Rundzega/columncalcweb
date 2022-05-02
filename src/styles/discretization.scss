@@ -1,0 +1,113 @@
+#discretization-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    max-width: 800px;
+    align-items: center;
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%);
+    padding: 25px 30px;
+    margin: 24px 0 24px 0;
+    border-radius: 24px;
+    min-width: 600px;
+
+
+    h2 {
+        color: #8E3A9D;
+    }
+
+    .sub-container {
+        border: 1px solid #71C562;
+        width: 100%;
+        padding: 20px 20px;
+        margin: 12px 0;
+        border-radius: 16px;
+        background-color: #fff;
+        border: 1px solid #8E3A9D;
+        
+    }
+
+    .title {
+        font-size: 26px;
+        font-weight: 500;
+        position: relative;
+        margin-bottom: 6px;
+        color: #71C562;
+        font-weight: 700;
+        
+
+        &::before{
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            height: 3px;
+            width: 40px;
+            background-color: #8E3A9D;
+        }
+    }
+
+    .subtitle {
+        font-size: 22px;
+        margin-bottom: -8px; 
+        color: #71C562;
+
+
+    }
+
+    .input-box {
+        width: 100%;
+        
+        display: flex;
+        flex-direction: column;
+        margin-left: -8px;
+        padding: 6px 0;
+
+        span {
+            margin-left: 8px;
+            font-size: 14px;
+            color: #71C562
+        }
+        
+        input {
+            background-color: #fff;
+            border-radius: 16px;
+            padding: 0 12px;
+            border: 1px solid #71C562;
+            color: #71C562;
+            font-size: 14px;
+            transition: 250ms;
+
+            &:disabled {
+                background-color: #CFCFCF;
+            }
+
+            &:focus {
+                border: 1px solid #8E3A9D;
+                outline: 1px solid #8E3A9D;
+            }
+
+        }
+
+        .valid {
+            
+            color: #71C562;
+        }
+        
+        .invalid {
+            border: 1px solid red;
+            color: red;
+        }
+        
+    }
+
+
+    form {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        padding: 8px;
+    
+    }
+}

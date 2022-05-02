@@ -6,6 +6,7 @@ import GeometryProvider from './contexts/GeometryContext';
 import MaterialsProvider from './contexts/MaterialsContext';
 import ReducerProvider from './contexts/ReducerContext';
 import CrossSection from './pages/CrossSection';
+import Discretization from './pages/Discretization';
 import Geometry from './pages/Geometry';
 import Home from './pages/Home';
 import Materials from './pages/Materials';
@@ -26,6 +27,7 @@ function App() {
             <Route path="/geometry" element={<Geometry />}></Route>
             <Route path="/materials" element={<Materials />}></Route>
             <Route path="/cross-section" element={<CrossSection />}></Route>
+            <Route path="/discretization" element={<Discretization />}></Route>
             <Route path="/results" element={<Results />}></Route>
           </Routes>
         </ReducerProvider>

@@ -2,9 +2,12 @@ import React from "react";
 import '../../styles/materials.scss'
 
 import { useMaterialsContext } from "../../hooks/useMaterialsContext";
-import handleValidatePositive from "../../utilities/handleValidatePositive";
+import handleValidateMinimum from "../../utilities/handleValidateMinimum";
 
 import { useReducerContext } from "../../hooks/useReducerContext";
+import { Link } from "react-router-dom";
+import NextPageButton from "../../components/NextPageButton";
+import PreviousPageButton from "../../components/PreviousPageButton";
 
 const concImg = require("../../assets/images/concreteImgCrop.png");
 const steelImg = require("../../assets/images/steelImgCrop.png");
@@ -91,7 +94,7 @@ function Materials() {
                   required
                   defaultValue={stateProp.variable} 
                   onBlur={(e) => {
-                    if(handleValidatePositive(e, (`${field}` + 'deve ser um número positivo'))) {
+                    if(handleValidateMinimum(e, 1, (`${field}` + 'deve ser um número positivo'))) {
                       
                       dispatch({type: 'field', fieldName:stateProp.stringName, payload: parseFloat(e.currentTarget.value)})
                     }
@@ -120,7 +123,7 @@ function Materials() {
                   required
                   defaultValue={stateProp.variable} 
                   onBlur={(e) => {
-                    if(handleValidatePositive(e, (`${field}` + 'deve ser um número positivo'))) {
+                    if(handleValidateMinimum(e, 1, (`${field}` + 'deve ser um número positivo'))) {
                       
                       dispatch({type: 'field', fieldName:stateProp.stringName, payload: parseFloat(e.currentTarget.value)})
                     }
@@ -133,6 +136,14 @@ function Materials() {
             })}
 
           </form>
+        </div>
+        <div className="navigation-buttons">
+          <div className="nav-button">
+            <PreviousPageButton to='geometry'  />
+          </div>
+          <div className="nav-button">
+            <NextPageButton to='cross-section'/>
+          </div>
         </div>
       </div>
     </>

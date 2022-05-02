@@ -2,6 +2,7 @@ import React from 'react'
 import * as AiIcons from 'react-icons/ai'
 import * as GiIcons from 'react-icons/gi'
 import * as BsIcons from 'react-icons/bs'
+import * as VscIcons from 'react-icons/vsc'
 
 
 export const SidebarData = [
@@ -30,9 +31,15 @@ export const SidebarData = [
         cName: 'nav-text'
     },
     {
+        title: 'Discretização',
+        path: '/discretization',
+        icon: <BsIcons.BsCalculator />,
+        cName: 'nav-text'
+    },
+    {
         title: 'Resultados',
         path: '/results',
-        icon: <BsIcons.BsCalculator />,
+        icon: <VscIcons.VscGraphLine />,
         cName: 'nav-text'
     },
 ]

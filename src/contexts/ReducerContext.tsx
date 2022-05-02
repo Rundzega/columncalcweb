@@ -29,7 +29,7 @@ type ReducerProviderProps = {
     children: ReactNode;
 }
 
-type InputState = {
+export type InputState = {
     length: number,
     uxRestrictionBottom: boolean,
     uyRestrictionBottom: boolean,
@@ -64,8 +64,16 @@ type InputState = {
     elementCounter: number,
     rectangleList: RectangleList,
     rebarList: RebarList,
-    selectedElement: number | null
-
+    selectedElement: number | null,
+    finiteElements: number,
+    xDiscretizations: number,
+    yDiscretizations: number,
+    diagramPoints: number,
+    loadIncrements: number,
+    maxIterationsPerIncrement: number,
+    displacementTolerance: number,
+    forcesTolerance: number,
+    neutralAxisTolerance: number
 }
 
 type InputAction = 
@@ -118,7 +126,16 @@ const initialState:InputState = {
     elementCounter: 0,
     rectangleList: [],
     rebarList: [],
-    selectedElement: null
+    selectedElement: null,
+    finiteElements: 20,
+    xDiscretizations: 20,
+    yDiscretizations: 20,
+    diagramPoints: 45,
+    loadIncrements: 5,
+    maxIterationsPerIncrement: 100,
+    displacementTolerance: 0.005,
+    forcesTolerance: 0.005,
+    neutralAxisTolerance: 0.001
 }
 
 
