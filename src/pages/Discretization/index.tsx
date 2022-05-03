@@ -1,15 +1,15 @@
 import React from 'react'
-import { useReducerContext } from '../../hooks/useReducerContext'
 import handleValidateMinimum from '../../utilities/handleValidateMinimum';
 import '../../styles/discretization.scss'
 import { Link } from 'react-router-dom';
 import NextPageButton from '../../components/NextPageButton';
 import PreviousPageButton from '../../components/PreviousPageButton';
+import { useColumnDataContext } from '../../hooks/useReducerContext';
 
 
 function Discretization() {
 
-    const { state, dispatch } = useReducerContext();
+    const { state, dispatch } = useColumnDataContext();
 
     const {
             finiteElements,

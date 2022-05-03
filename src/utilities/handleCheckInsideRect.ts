@@ -1,14 +1,11 @@
 import React from 'react';
-import { RectangleList, RebarList } from '../contexts/CrossSectionContext';
+import { IRebarList } from '../interfaces/IRebarList';
+import { IRectangleList } from '../interfaces/IRectangleList';
+import { INewRebar } from '../interfaces/INewRebar';
+
 import errorMsg from './errorMsg';
 
-type RebarProps = {
-    diameter: number,
-    xCoord: number,
-    yCoord: number
-}
-
-const handleCheckInsideRect  = (newRebar:RebarProps, RebarList:RebarList, rectangleList:RectangleList) => {
+const handleCheckInsideRect  = (newRebar:INewRebar, RebarList:IRebarList, rectangleList:IRectangleList) => {
 
 
     const rebarLeftExtreme = newRebar.xCoord - newRebar.diameter / 20;

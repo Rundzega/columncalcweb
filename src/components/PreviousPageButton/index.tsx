@@ -2,13 +2,10 @@ import React, { ButtonHTMLAttributes } from 'react'
 import { IconContext } from 'react-icons';
 import * as AiIcons from 'react-icons/ai'
 import { useNavigate } from 'react-router-dom';
+import { INavButton } from '../../interfaces/INavButton';
 import '../../styles/previous-page-button.scss'
 
-type NavButtonType = ButtonHTMLAttributes<HTMLButtonElement> & {
-    to?: string
-}
-
-function PreviousPageButton( props:NavButtonType ) {
+function PreviousPageButton( props:INavButton ) {
     const { to } = props
     const navigate = useNavigate()
 

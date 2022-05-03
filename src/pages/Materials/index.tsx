@@ -1,13 +1,12 @@
 import React from "react";
 import '../../styles/materials.scss'
 
-import { useMaterialsContext } from "../../hooks/useMaterialsContext";
 import handleValidateMinimum from "../../utilities/handleValidateMinimum";
 
-import { useReducerContext } from "../../hooks/useReducerContext";
 import { Link } from "react-router-dom";
 import NextPageButton from "../../components/NextPageButton";
 import PreviousPageButton from "../../components/PreviousPageButton";
+import { useColumnDataContext } from "../../hooks/useReducerContext";
 
 const concImg = require("../../assets/images/concreteImgCrop.png");
 const steelImg = require("../../assets/images/steelImgCrop.png");
@@ -17,7 +16,7 @@ const steelImg = require("../../assets/images/steelImgCrop.png");
 function Materials() {
 
 
-  const { state, dispatch } = useReducerContext();
+  const { state, dispatch } = useColumnDataContext();
 
   const { fck, gammaC, beta, alpha, phi, fyk, gammaS, es, esu } = state
 

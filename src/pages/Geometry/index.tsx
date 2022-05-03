@@ -2,12 +2,11 @@ import React from "react";
 import "../../styles/geometry.scss";
 
 import handleValidateMinimum from "../../utilities/handleValidateMinimum";
-import { useGeometryContext } from "../../hooks/useGeometryContext";
 import handleValidateNumber from "../../utilities/handleValidateNumber";
-import { useReducerContext } from "../../hooks/useReducerContext";
 import NextPageButton from "../../components/NextPageButton";
 import PreviousPageButton from "../../components/PreviousPageButton";
 import { Link } from "react-router-dom";
+import { useColumnDataContext } from "../../hooks/useReducerContext";
 
 const columnImg = require("../../assets/images/columnImg.png");
 
@@ -15,7 +14,7 @@ function Geometry() {
 
   // const { length, setLength, bottomLoads, setBottomLoads, topLoads, setTopLoads, bottomRestrictions, setBottomRestrictions, topRestrictions, setTopRestrictions } = useGeometryContext();
 
-  const { state, dispatch } = useReducerContext();
+  const { state, dispatch } = useColumnDataContext();
 
   const { 
     uxRestrictionBottom,

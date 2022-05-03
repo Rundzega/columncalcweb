@@ -1,8 +1,8 @@
+import { IColumnData } from "../interfaces/IColumnData"
 import { Api } from "../providers"
 
 
-
-const ColumnResultsService = async(data: any) => await Api.post('/test/post', data).then((resposne) => resposne).catch((err) => console.log(err)) 
+const ColumnResultsService = (data: IColumnData) => Api.post('/test/post', data)
 
 export const ResultsService = {
     ColumnResultsService,

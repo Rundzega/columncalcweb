@@ -1,10 +1,7 @@
 import React from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Sidebar from './components/Sidebar';
-import CrossSectionProvider from './contexts/CrossSectionContext';
-import GeometryProvider from './contexts/GeometryContext';
-import MaterialsProvider from './contexts/MaterialsContext';
-import ReducerProvider from './contexts/ReducerContext';
+import ColumnDataProvider from './contexts/ColumnDataContext';
 import CrossSection from './pages/CrossSection';
 import Discretization from './pages/Discretization';
 import Geometry from './pages/Geometry';
@@ -18,10 +15,7 @@ function App() {
     <>
       <BrowserRouter>
         <Sidebar /> 
-        <GeometryProvider>
-        <MaterialsProvider>
-        <CrossSectionProvider>
-        <ReducerProvider>
+        <ColumnDataProvider>
           <Routes>
             <Route path="/" element={<Home />}></Route>
             <Route path="/geometry" element={<Geometry />}></Route>
@@ -30,10 +24,7 @@ function App() {
             <Route path="/discretization" element={<Discretization />}></Route>
             <Route path="/results" element={<Results />}></Route>
           </Routes>
-        </ReducerProvider>
-        </CrossSectionProvider>
-        </MaterialsProvider>
-        </GeometryProvider>
+        </ColumnDataProvider>
       </BrowserRouter>
     </>
   );

@@ -1,17 +1,9 @@
 import React from 'react';
-import { RectangleList } from '../contexts/CrossSectionContext';
+import { INewRect } from '../interfaces/INewRect';
+import { IRectangleList } from '../interfaces/IRectangleList';
 import errorMsg from './errorMsg';
 
-type RectProps = {
-    width: number,
-    height: number,
-    xCoord: number,
-    yCoord: number
-}
-
-
-
-const handleCheckRectOverlap = (newRectangle:RectProps, rectangleList:RectangleList ) => {
+const handleCheckRectOverlap = (newRectangle:INewRect, rectangleList:IRectangleList ) => {
 
     const newRectLeftVertices = newRectangle.xCoord - newRectangle.width / 2;
     const newRectRightVertices = newRectangle.xCoord + newRectangle.width / 2;

@@ -1,9 +1,8 @@
 import React from 'react'
-import { InputState } from '../contexts/ReducerContext';
-import { useReducerContext } from '../hooks/useReducerContext'
+import { IInputState } from '../interfaces/IInputState'
 
 
-export const getColumnData = (data:InputState) => {
+export const parseColumnData = (data:IInputState) => {
     return {
         "Length": data.length,
         "Concrete": {

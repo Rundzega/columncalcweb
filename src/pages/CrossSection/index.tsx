@@ -1,7 +1,6 @@
 import React, { SVGProps, useEffect, useRef, useState } from 'react'
 import AddButton from '../../components/AddButton';
 import RemoveButton from '../../components/RemoveButton';
-import { useCrossSectionContext } from '../../hooks/useCrossSectionContext';
 import '../../styles/cross-section.scss'
 import errorMsg from '../../utilities/errorMsg';
 import handleValidateNumber from '../../utilities/handleValidateNumber';
@@ -10,16 +9,15 @@ import { select } from 'd3-selection'
 import handleCheckRectOverlap from '../../utilities/handleCheckOverlap';
 import handleCheckInsideRect from '../../utilities/handleCheckInsideRect';
 import { axisBottom, axisLeft, line, scaleLinear, } from 'd3';
-import { RectangleList } from '../../contexts/CrossSectionContext';
-import { useReducerContext } from '../../hooks/useReducerContext';
 import { Link } from 'react-router-dom';
 import NextPageButton from '../../components/NextPageButton';
 import PreviousPageButton from '../../components/PreviousPageButton';
+import { useColumnDataContext } from '../../hooks/useReducerContext';
 
 
 function CrossSection() {
     
-    const { state,  dispatch } = useReducerContext();
+    const { state,  dispatch } = useColumnDataContext();
     
     const [rectProps, setRectProps] = useState({
         width: 25,

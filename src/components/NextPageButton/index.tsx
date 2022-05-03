@@ -4,13 +4,10 @@ import * as GrIcons from 'react-icons/gr'
 import * as AiIcons from 'react-icons/ai'
 import '../../styles/next-page-button.scss'
 import { useNavigate } from 'react-router-dom';
+import { INavButton } from '../../interfaces/INavButton';
 
 
-type NavButtonType = ButtonHTMLAttributes<HTMLButtonElement> & {
-    to?: string
-}
-
-function NextPageButton( props:NavButtonType ) {
+function NextPageButton( props:INavButton ) {
     const { to } = props
     const navigate = useNavigate()
 

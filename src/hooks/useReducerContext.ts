@@ -1,8 +1,8 @@
 import { useContext } from 'react';
-import { ReducerContext } from '../contexts/ReducerContext';
+import { ColumnDataContext } from '../contexts/ColumnDataContext';
 
-export function useReducerContext() {
-    const context = useContext(ReducerContext);
+export function useColumnDataContext() {
+    const context = useContext(ColumnDataContext);
     const { state, dispatch } = context
     return { state, dispatch };
 }

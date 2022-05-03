@@ -1,97 +1,14 @@
 import React, { createContext, ReactNode, useEffect, useReducer, useState } from 'react';
+import { IInputAction } from '../interfaces/IInputAction';
+import { IInputState } from '../interfaces/IInputState';
+import { IRebarList } from '../interfaces/IRebarList';
+import { IRectangleList } from '../interfaces/IRectangleList';
+import { IReducerContextType } from '../interfaces/IReducerContextProps';
+import { IReducerProviderProps } from '../interfaces/IReducerProviderProps';
 
-export const ReducerContext = createContext({} as ReducerContextType);
+export const ColumnDataContext = createContext({} as IReducerContextType);
 
-type Rectangle = {
-    index: number
-    width: number,
-    height: number,
-    xCenterCoordinate: number,
-    yCenterCoordinate: number,
-    isHighlighted: boolean
-}
-
-export type RectangleList = Array<Rectangle>
-
-
-type Rebar = {
-    index: number,
-    diameter: number,
-    xCenterCoordinate: number,
-    yCenterCoordinate: number,
-    isHighlighted: boolean,
-    isInsideRectangle: boolean
-}
-
-export type RebarList = Array<Rebar>
-
-type ReducerProviderProps = {
-    children: ReactNode;
-}
-
-export type InputState = {
-    length: number,
-    uxRestrictionBottom: boolean,
-    uyRestrictionBottom: boolean,
-    uzRestrictionBottom: boolean,
-    rxRestrictionBottom: boolean,
-    ryRestrictionBottom: boolean,
-    uxRestrictionTop: boolean,
-    uyRestrictionTop: boolean,
-    uzRestrictionTop: boolean,
-    rxRestrictionTop: boolean,
-    ryRestrictionTop: boolean,
-    pxdBottomLoad: number,
-    pydBottomLoad: number,
-    mxdBottomLoad: number,
-    mydBottomLoad: number,
-    fzdTopLoad: number,
-    hxdTopLoad: number,
-    hydTopLoad: number,
-    pxdTopLoad: number,
-    pydTopLoad: number,
-    mxdTopLoad: number,
-    mydTopLoad: number,
-    fck: number,
-    gammaC: number,
-    beta: number,
-    alpha: number,
-    phi: number,
-    fyk: number,
-    gammaS: number,
-    es: number,
-    esu: number,
-    elementCounter: number,
-    rectangleList: RectangleList,
-    rebarList: RebarList,
-    selectedElement: number | null,
-    finiteElements: number,
-    xDiscretizations: number,
-    yDiscretizations: number,
-    diagramPoints: number,
-    loadIncrements: number,
-    maxIterationsPerIncrement: number,
-    displacementTolerance: number,
-    forcesTolerance: number,
-    neutralAxisTolerance: number
-}
-
-type InputAction = 
-    | { type: 'field'; fieldName: string, payload: boolean }
-    | { type: 'field'; fieldName: string, payload: number }
-    | { type: 'add-rectangle'; payload: Rectangle }
-    | { type: 'add-rebar'; payload: Rebar }
-    | { type: 'remove-rebar' | 'remove-rectangle' }
-    | { type: 'update-rect-rebar-list'; payload: {rectangleList: RectangleList, rebarList: RebarList} }
-    | { type: 'select-element'; payload: {element: SVGCircleElement | SVGRectElement | EventTarget & HTMLTableRowElement} }
-
-
-type ReducerContextType = {
-    state: InputState,
-    dispatch: React.Dispatch<InputAction>
-}
-
-const initialState:InputState = {
+const initialState:IInputState = {
     length: 0,
     uxRestrictionBottom: true,
     uyRestrictionBottom: true,
@@ -139,7 +56,7 @@ const initialState:InputState = {
 }
 
 
-function reducer(state:InputState, action:InputAction) {
+function reducer(state:IInputState, action:IInputAction) {
     switch (action.type) {
         case 'field': {
             return {
@@ -276,8 +193,8 @@ function reducer(state:InputState, action:InputAction) {
             })
 
             let newSelectedElement:number | null;
-            let newRectList:RectangleList = [...state.rectangleList]
-            let newRebarList:RebarList = [...state.rebarList]
+            let newRectList:IRectangleList = [...state.rectangleList]
+            let newRebarList:IRebarList = [...state.rebarList]
 
             newSelectedElement = rectId.length > rebarId.length ? rectId[0].index : rebarId[0].index
 
@@ -309,14 +226,14 @@ function reducer(state:InputState, action:InputAction) {
         }
     }
 }
-export default function ReducerProvider( props: ReducerProviderProps ) {
+export default function ColumnDataProvider( props: IReducerProviderProps ) {
 
     
     const [state, dispatch] = useReducer(reducer, initialState)
 
     return (
-        <ReducerContext.Provider value = {{ state, dispatch }}>
+        <ColumnDataContext.Provider value = {{ state, dispatch }}>
             {props.children}
-        </ReducerContext.Provider>
+        </ColumnDataContext.Provider>
     )
 }
