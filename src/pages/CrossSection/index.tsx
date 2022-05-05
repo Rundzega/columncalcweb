@@ -9,10 +9,9 @@ import { select } from 'd3-selection'
 import handleCheckRectOverlap from '../../utilities/handleCheckOverlap';
 import handleCheckInsideRect from '../../utilities/handleCheckInsideRect';
 import { axisBottom, axisLeft, line, scaleLinear, } from 'd3';
-import { Link } from 'react-router-dom';
 import NextPageButton from '../../components/NextPageButton';
 import PreviousPageButton from '../../components/PreviousPageButton';
-import { useColumnDataContext } from '../../hooks/useReducerContext';
+import { useColumnDataContext } from '../../hooks/useColumnDataContext';
 
 
 function CrossSection() {

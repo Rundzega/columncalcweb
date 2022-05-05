@@ -1,47 +1,34 @@
-import React, { useRef, useState } from 'react'
-import { useColumnDataContext } from '../../hooks/useReducerContext';
-import { ResultsService } from '../../services/ResultsService'
-
-import { parseColumnData } from '../../utilities/parseColumnData'
-
-
-
+import { useColumnDataContext } from '../../hooks/useColumnDataContext';
 import '../../styles/results.scss'
 import { ResultButton } from '../../components/ResultButton';
 import CalculateButton from '../../components/CalculateButton';
-
+import { ResultSVG } from '../../components/ResultSVG';
 
 
 function Results() {
 
-    const [test, setTest] = useState<any>(0)
     const { state } = useColumnDataContext();
-
-    const columnData = parseColumnData(state);
-
-    const resultsSvg = useRef<SVGSVGElement | null>(null)
 
 
     return(
         <>
             <div id="results-container">
                 <h2>Results</h2>
-                <div className="svg-container" id="svg-d3-results">
-                    <svg className='svg-results'ref={resultsSvg}></svg>
-                </div>
-                <div className="calculate-button"><CalculateButton >CALCULAR</CalculateButton></div>
+                <ResultSVG result = {state.resultDisplay.result} title={state.resultDisplay.title} unit={state.resultDisplay.unit}></ResultSVG>
+                <div className="calculate-button">
+                    <CalculateButton>CALCULAR</CalculateButton></div>
                 <div className="sub-container" id="longitudinal-results">
                     <div className="title">Resultados do Pilar</div>
                     <div className="subtitle">Esforços</div>    
                     <div className="forces">
-                        <ResultButton>Nd</ResultButton>
-                        <ResultButton>Mx</ResultButton>
-                        <ResultButton>My</ResultButton>
+                        <ResultButton result='ndForces' unit='kN' title='Nd (kN)'>Nd</ResultButton>
+                        <ResultButton result='mxForces' unit='kN.m' title='Mxd (kN.m)'>Mx</ResultButton>
+                        <ResultButton result='myForces' unit='kN.m' title='Myd (kN.m)'>My</ResultButton>
                     </div>
                     <div className="subtitle">Deslocamentos</div>
                     <div className="displacements">
-                        <ResultButton>ux</ResultButton>
-                        <ResultButton>uy</ResultButton>
+                        <ResultButton result='uxDisplacements' unit='cm' title='ux (cm)'>ux</ResultButton>
+                        <ResultButton result='uyDisplacements' unit='cm' title='uy (cm)'>uy</ResultButton>
                     </div>
                 </div>
                 <div className="sub-container" id="transversal-results">
@@ -49,39 +36,19 @@ function Results() {
                     <div className="cross-section-results">
                         <div className="subtitle">Esforços Máximos</div>
                         <div className="max">
-                            <ResultButton>Nd</ResultButton>
-                            <ResultButton>Mx</ResultButton>
-                            <ResultButton>My</ResultButton>
+                            <ResultButton result='ndForces' unit='kN' title='Nd (kN)'>Nd</ResultButton>
+                            <ResultButton result='ndForces' unit='kN' title='Nd (kN)'>Mx</ResultButton>
+                            <ResultButton result='ndForces' unit='kN' title='Nd (kN)'>My</ResultButton>
                         </div>
                         <div className="subtitle">Esforços Mínimos</div>
                         <div className="min">
-                            <ResultButton>Nd</ResultButton>
-                            <ResultButton>Mx</ResultButton>
-                            <ResultButton>My</ResultButton>
-
+                            <ResultButton result='ndForces' unit='kN' title='Nd (kN)'>Nd</ResultButton>
+                            <ResultButton result='ndForces' unit='kN' title='Nd (kN)'>Mx</ResultButton>
+                            <ResultButton result='ndForces' unit='kN' title='Nd (kN)'>My</ResultButton>
                         </div>
                     </div>
                 </div>
             </div>
-            <button
-            onClick={async () => {
-                // console.log(JSON.stringify(columnData))
-               const response = ResultsService.ColumnResultsService(columnData)
-                                .then((response) => {
-                                    console.log(response)
-                                    setTest(response)
-                                })
-                                .catch((err) => {
-                                    console.log(err)
-                                })
-            }}>
-                BOTAO
-            </button>
-
-            <button >SEND</button>
-            {/* <div>{JSON.stringify(columnData)}</div> */}
-            {/* <div>{JSON.stringify(state)}</div> */}
-            <div>{JSON.stringify(test)}</div>
         </>
     )
 }

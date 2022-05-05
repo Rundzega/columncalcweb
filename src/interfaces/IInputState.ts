@@ -1,5 +1,7 @@
 import { IRebarList } from "./IRebarList";
 import { IRectangleList } from "./IRectangleList";
+import { IResults } from "./IResults";
+import { IResultsDisplay } from "./IResultsDisplay";
 
 export interface IInputState  {
     length: number,
@@ -45,5 +47,7 @@ export interface IInputState  {
     maxIterationsPerIncrement: number,
     displacementTolerance: number,
     forcesTolerance: number,
-    neutralAxisTolerance: number
+    neutralAxisTolerance: number,
+    results: IResults;
+    resultDisplay: IResultsDisplay
 }

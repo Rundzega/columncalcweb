@@ -6,7 +6,7 @@ import handleValidateMinimum from "../../utilities/handleValidateMinimum";
 import { Link } from "react-router-dom";
 import NextPageButton from "../../components/NextPageButton";
 import PreviousPageButton from "../../components/PreviousPageButton";
-import { useColumnDataContext } from "../../hooks/useReducerContext";
+import { useColumnDataContext } from "../../hooks/useColumnDataContext";
 
 const concImg = require("../../assets/images/concreteImgCrop.png");
 const steelImg = require("../../assets/images/steelImgCrop.png");

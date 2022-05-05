@@ -6,7 +6,7 @@ import handleValidateNumber from "../../utilities/handleValidateNumber";
 import NextPageButton from "../../components/NextPageButton";
 import PreviousPageButton from "../../components/PreviousPageButton";
 import { Link } from "react-router-dom";
-import { useColumnDataContext } from "../../hooks/useReducerContext";
+import { useColumnDataContext } from "../../hooks/useColumnDataContext";
 
 const columnImg = require("../../assets/images/columnImg.png");
 

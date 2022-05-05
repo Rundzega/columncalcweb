@@ -1,5 +1,5 @@
 .calculate {
-    // width: 100%;
+    width: 100%;
     margin-top: 12px;
     appearance: none;
     background-color: #8E3A9D;
@@ -22,6 +22,7 @@
     touch-action: manipulation;
     vertical-align: middle;
     white-space: nowrap;
+    transition: 200ms;
 }
 
 .calculate:focus:not(:focus-visible):not(.focus-visible) {

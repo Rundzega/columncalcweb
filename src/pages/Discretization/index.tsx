@@ -4,7 +4,7 @@ import '../../styles/discretization.scss'
 import { Link } from 'react-router-dom';
 import NextPageButton from '../../components/NextPageButton';
 import PreviousPageButton from '../../components/PreviousPageButton';
-import { useColumnDataContext } from '../../hooks/useReducerContext';
+import { useColumnDataContext } from '../../hooks/useColumnDataContext';
 
 
 function Discretization() {

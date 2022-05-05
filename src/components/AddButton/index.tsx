@@ -6,7 +6,6 @@ function AddButton( props:ButtonHTMLAttributes<HTMLButtonElement> ) {
 
     return(
 
-
         <button 
             className='add'
             {...props}

@@ -1,8 +1,8 @@
-.calculate {
+.add {
     width: 100%;
-    margin-top: 12px;
+    margin-top: 6px;
     appearance: none;
-    background-color: #8E3A9D;
+    background-color: #25ae4c;
     border: 1px solid rgba(27, 31, 35, .15);
     border-radius: 66px;
     box-shadow: rgba(27, 31, 35, .1) 0 1px 0;
@@ -10,10 +10,10 @@
     color: #fff;
     cursor: pointer;
     display: inline-block;
-    font-size: 25px;
+    font-size: 14px;
     font-weight: 600;
-    line-height: 25px;
-    padding: 12px 24px;
+    line-height: 20px;
+    padding: 6px 16px;
     position: relative;
     text-align: center;
     text-decoration: none;
@@ -22,26 +22,31 @@
     touch-action: manipulation;
     vertical-align: middle;
     white-space: nowrap;
+    transition: 200ms;
 }
 
-.calculate:focus:not(:focus-visible):not(.focus-visible) {
+.add:focus:not(:focus-visible):not(.focus-visible) {
     box-shadow: none;
     outline: none;
 }
 
-.calculate:hover {
-    background-color: #9c32af;
+.add:hover {
+    background-color: #298e46;
 }
 
-.calculate:focus {
+.add:focus {
     box-shadow: rgba(46, 164, 79, .4) 0 0 0 3px;
     outline: none;
 }
 
-.calculate:disabled {
-    background-color: #9c32af;
+.add:disabled {
+    background-color: #94d3a2;
     border-color: rgba(27, 31, 35, .1);
     color: rgba(255, 255, 255, .8);
     cursor: default;
 }
 
+.add:active {
+    background-color: #298e46;
+    box-shadow: rgba(20, 70, 32, .2) 0 1px 0 inset;
+}

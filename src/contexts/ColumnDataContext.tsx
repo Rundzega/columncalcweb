@@ -1,10 +1,11 @@
-import React, { createContext, ReactNode, useEffect, useReducer, useState } from 'react';
+import React, { createContext, useReducer } from 'react';
 import { IInputAction } from '../interfaces/IInputAction';
 import { IInputState } from '../interfaces/IInputState';
 import { IRebarList } from '../interfaces/IRebarList';
 import { IRectangleList } from '../interfaces/IRectangleList';
 import { IReducerContextType } from '../interfaces/IReducerContextProps';
 import { IReducerProviderProps } from '../interfaces/IReducerProviderProps';
+import Results from '../pages/Results';
 
 export const ColumnDataContext = createContext({} as IReducerContextType);
 
@@ -52,7 +53,37 @@ const initialState:IInputState = {
     maxIterationsPerIncrement: 100,
     displacementTolerance: 0.005,
     forcesTolerance: 0.005,
-    neutralAxisTolerance: 0.001
+    neutralAxisTolerance: 0.001,
+    results: {
+
+        isResultsAvailable: false,
+        uyDisplacements: null,
+        uxDisplacements: null,
+        ndForces: null,
+        mxForces: null,
+        myForces: null,
+        ndMaxResistanceDiagramPoints: null,
+        ndMinResistanceDiagramPoints: null,
+        mxMinResistanceDiagramPoints: null,
+        mxMaxResistanceDiagramPoints: null,
+        myMinResistanceDiagramPoints: null,
+        myMaxResistanceDiagramPoints: null,
+        anglesResistanceDiagramPoints: null,
+        lengthPoints: null,
+        ndMaxSolicitingForces: null,
+        ndMinSolicitingForces: null,
+        mxMinSolicitingForces: null,
+        mxMaxSolicitingForces: null,
+        myMinSolicitingForces: null,
+        myMaxSolicitingForces: null,
+        anglesSolicitingForces: null,
+    },
+    resultDisplay: {
+        result: 'ndForces',
+        title: 'Nd (kN)',
+        unit: 'kN'
+    }
+    
 }
 
 
@@ -60,7 +91,7 @@ function reducer(state:IInputState, action:IInputAction) {
     switch (action.type) {
         case 'field': {
             return {
-                ...state, [action.fieldName as string]: action.payload
+                ...state, [action.fieldName as string]: action.payload, results: {...state.results, isResultsAvailable: false }
             }
         }
 
@@ -76,7 +107,7 @@ function reducer(state:IInputState, action:IInputAction) {
             }]    
             
             return {
-                ...state, elementCounter: (state.elementCounter + 1), rectangleList: newRectangleList
+                ...state, elementCounter: (state.elementCounter + 1), rectangleList: newRectangleList, isResultsAvailable: false
             }
             
         } 
@@ -92,7 +123,7 @@ function reducer(state:IInputState, action:IInputAction) {
             }]    
             
             return {
-                ...state, rebarList: newRebarList, elementCounter: (state.elementCounter + 1)
+                ...state, rebarList: newRebarList, elementCounter: (state.elementCounter + 1), isResultsAvailable: false
             }
         }
 
@@ -150,7 +181,7 @@ function reducer(state:IInputState, action:IInputAction) {
 
 
             return {
-                ...state, rebarList: rebarListAfterDelete, rectangleList: rectanglesDeletedRow, selectedElement: null
+                ...state, rebarList: rebarListAfterDelete, rectangleList: rectanglesDeletedRow, selectedElement: null, isResultsAvailable: false,
             }
 
         }
@@ -172,7 +203,7 @@ function reducer(state:IInputState, action:IInputAction) {
             }
 
             return {
-                ...state, rebarList: rebarsDeletedRow, selectedElement: null
+                ...state, rebarList: rebarsDeletedRow, selectedElement: null, isResultsAvailable: false
             }
         }        
         
@@ -218,6 +249,19 @@ function reducer(state:IInputState, action:IInputAction) {
 
             return {
                 ...state, rectangleList: newRectList, rebarList: newRebarList, selectedElement: newSelectedElement
+            }
+        }
+
+        case 'update-results': {
+            return {
+                ...state, results: action.payload
+            }
+        }
+
+        case 'display-results': {
+            console.log('kkkk')
+            return {
+                ...state, resultDisplay: action.payload
             }
         }
 
