@@ -1,12 +1,11 @@
 import { select, scaleLinear, axisBottom } from "d3";
-import { useRef, useState, useEffect, Component } from "react";
+import { useRef, useEffect } from "react";
 import { useColumnDataContext } from "../../hooks/useColumnDataContext";
-import { IResultsDisplay } from "../../interfaces/IResultsDisplay";
-import { parseColumnData } from "../../utilities/parseColumnData";
+import { ILongitudinalResultsDisplay } from "../../interfaces/ILongitudinalResultsDisplay";
 import '../../styles/results-svg.scss'
 
 
-export function ResultSVG({...props}: IResultsDisplay) {
+export function LongitudinalResultSVG({...props}: ILongitudinalResultsDisplay) {
 
     const { state } = useColumnDataContext();
 
@@ -14,7 +13,6 @@ export function ResultSVG({...props}: IResultsDisplay) {
     
     useEffect(() => {
 
-        //LONGITUDINAL RESULTS ONLY FOR NOW
 
         const svg = select(resultsSvg.current)
         
@@ -22,12 +20,24 @@ export function ResultSVG({...props}: IResultsDisplay) {
         const desiredResult = props.result
         const title = props.title
         const unit = props.unit
-        console.log(desiredResult)
         
         svg.selectAll('g').remove()
         svg.selectAll('text').remove()
 
         if (!state.results.isResultsAvailable) {
+            const width = parseInt(svg.style('width'))
+            const height = parseInt(svg.style('height'))
+
+            const fontSize = width/20
+
+            svg.append('text')
+                .attr('x', width/2)
+                .attr('y', height/2)
+                .text('RESULTADOS NÃO DISPONÍVEIS')
+                .attr('text-anchor', 'middle')
+                .style('font-weigth', 700 )
+                .style('font-size', `${fontSize}` )
+                .style('fill', 'red' )
             return
         }
 
@@ -155,13 +165,13 @@ export function ResultSVG({...props}: IResultsDisplay) {
             })
 
             svg.select('#column-line')
-            .append('line')
-            .attr('x1', xScale(0))
-            .attr('x2', xScale(0))
-            .attr('y1', yScale(0))
-            .attr('y2', yScale(columnLength))
-            .style('stroke', '#000')
-            .style('stroke-width', '5px')
+                .append('line')
+                .attr('x1', xScale(0))
+                .attr('x2', xScale(0))
+                .attr('y1', yScale(0))
+                .attr('y2', yScale(columnLength))
+                .style('stroke', '#000')
+                .style('stroke-width', '5px')
 
 
             svg.select('#title')

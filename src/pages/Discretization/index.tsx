@@ -79,7 +79,9 @@ function Discretization() {
                     required
                     defaultValue={stateProp.value} 
                     onBlur={(e) => {
-                      if(handleValidateMinimum(e, 0, (`${field}` + 'deve ser um número positivo'))) {
+                      const minValue = stateProp.stringName == 'diagramPoints' ? 45 : 0
+                    
+                      if(handleValidateMinimum(e, minValue, (`${field} deve ser um número mario do que ${minValue}`))) {
                         
                         dispatch({type: 'field', fieldName:stateProp.stringName, payload: parseFloat(e.currentTarget.value)})
                       }

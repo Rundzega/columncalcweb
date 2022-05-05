@@ -1,9 +1,8 @@
-import { ButtonHTMLAttributes } from 'react';
 import { useColumnDataContext } from '../../hooks/useColumnDataContext';
-import { IButtonProps } from '../../interfaces/IButtonProps';
+import { ITransversalButton } from '../../interfaces/ITransversalButton';
 import '../../styles/results-button.scss'
 
-export function ResultButton({...props}: IButtonProps) {
+export function TransversalResultsButton({...props}: ITransversalButton) {
 
     const { state, dispatch } = useColumnDataContext();
 
@@ -12,15 +11,14 @@ export function ResultButton({...props}: IButtonProps) {
             <button 
             className="result-button" 
             onClick={() => {
-                console.log('aqui')
-                dispatch({ type: 'display-results', payload:{
+                dispatch({ type: 'display-transversal-results', payload:{
                     title: props.title,
-                    result: props.result,
-                    unit: props.unit
+                    diagram: props.diagram,
+                    forces: props.forces
                 }})
 
-                console.log(state)
             }}
+            disabled = {!state.results.isResultsAvailable}
             {...props} />
             
         </div>

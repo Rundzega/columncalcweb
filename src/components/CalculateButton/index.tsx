@@ -1,4 +1,3 @@
-import { dispatch } from 'd3';
 import React, { ButtonHTMLAttributes } from 'react'
 import { useColumnDataContext } from '../../hooks/useColumnDataContext';
 import { ResultsService } from '../../services/ResultsService';

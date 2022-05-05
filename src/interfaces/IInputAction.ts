@@ -3,7 +3,8 @@ import { IRebarList } from "./IRebarList";
 import { IRectangle } from "./IRectangle";
 import { IRectangleList } from "./IRectangleList";
 import { IResults } from "./IResults";
-import { IResultsDisplay } from "./IResultsDisplay";
+import { ILongitudinalResultsDisplay } from "./ILongitudinalResultsDisplay";
+import { ITransversalResultsDisplay } from "./ITransversalResultsDisplay";
 
 export type IInputAction  =
     | { type: 'field'; fieldName: string, payload: boolean }
@@ -14,5 +15,6 @@ export type IInputAction  =
     | { type: 'update-rect-rebar-list'; payload: {rectangleList: IRectangleList, rebarList: IRebarList} }
     | { type: 'select-element'; payload: {element: SVGCircleElement | SVGRectElement | EventTarget & HTMLTableRowElement} }
     | { type: 'update-results'; payload: IResults}
-    | { type: 'display-results'; payload: IResultsDisplay}
+    | { type: 'display-longitudinal-results'; payload: ILongitudinalResultsDisplay}
+    | { type: 'display-transversal-results'; payload: ITransversalResultsDisplay}
 

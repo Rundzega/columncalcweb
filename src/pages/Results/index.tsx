@@ -1,8 +1,10 @@
 import { useColumnDataContext } from '../../hooks/useColumnDataContext';
 import '../../styles/results.scss'
-import { ResultButton } from '../../components/ResultButton';
+import { LongitudinalResultButton } from '../../components/LongitudinalResultButton';
 import CalculateButton from '../../components/CalculateButton';
-import { ResultSVG } from '../../components/ResultSVG';
+import { LongitudinalResultSVG } from '../../components/LongitudinalResultSVG';
+import { TransversalResultSVG } from '../../components/TransversalResultSVG';
+import { TransversalResultsButton } from '../../components/TransversalResultButton';
 
 
 function Results() {
@@ -14,21 +16,32 @@ function Results() {
         <>
             <div id="results-container">
                 <h2>Results</h2>
-                <ResultSVG result = {state.resultDisplay.result} title={state.resultDisplay.title} unit={state.resultDisplay.unit}></ResultSVG>
+                {state.currentResultType == 'longitudinal' ? 
+                    <LongitudinalResultSVG 
+                        result = {state.longitudinalDisplayResults.result} 
+                        title={state.longitudinalDisplayResults.title} 
+                        unit={state.longitudinalDisplayResults.unit}>
+                    </LongitudinalResultSVG> : 
+                    <TransversalResultSVG 
+                        diagram={state.transversalDisplayResults.diagram}
+                        forces={state.transversalDisplayResults.forces} 
+                        title={state.transversalDisplayResults.title}>
+                    </TransversalResultSVG>
+            }
                 <div className="calculate-button">
                     <CalculateButton>CALCULAR</CalculateButton></div>
                 <div className="sub-container" id="longitudinal-results">
                     <div className="title">Resultados do Pilar</div>
-                    <div className="subtitle">Esforços</div>    
+                    <div className="subtitle">Esforços</div>     
                     <div className="forces">
-                        <ResultButton result='ndForces' unit='kN' title='Nd (kN)'>Nd</ResultButton>
-                        <ResultButton result='mxForces' unit='kN.m' title='Mxd (kN.m)'>Mx</ResultButton>
-                        <ResultButton result='myForces' unit='kN.m' title='Myd (kN.m)'>My</ResultButton>
+                        <LongitudinalResultButton result='ndForces' unit='kN' title='Nd (kN)'>Nd</LongitudinalResultButton>
+                        <LongitudinalResultButton result='mxForces' unit='kN.m' title='Mxd (kN.m)'>Mx</LongitudinalResultButton>
+                        <LongitudinalResultButton result='myForces' unit='kN.m' title='Myd (kN.m)'>My</LongitudinalResultButton>
                     </div>
                     <div className="subtitle">Deslocamentos</div>
                     <div className="displacements">
-                        <ResultButton result='uxDisplacements' unit='cm' title='ux (cm)'>ux</ResultButton>
-                        <ResultButton result='uyDisplacements' unit='cm' title='uy (cm)'>uy</ResultButton>
+                        <LongitudinalResultButton result='uxDisplacements' unit='cm' title='ux (cm)'>ux</LongitudinalResultButton>
+                        <LongitudinalResultButton result='uyDisplacements' unit='cm' title='uy (cm)'>uy</LongitudinalResultButton>
                     </div>
                 </div>
                 <div className="sub-container" id="transversal-results">
@@ -36,15 +49,36 @@ function Results() {
                     <div className="cross-section-results">
                         <div className="subtitle">Esforços Máximos</div>
                         <div className="max">
-                            <ResultButton result='ndForces' unit='kN' title='Nd (kN)'>Nd</ResultButton>
-                            <ResultButton result='ndForces' unit='kN' title='Nd (kN)'>Mx</ResultButton>
-                            <ResultButton result='ndForces' unit='kN' title='Nd (kN)'>My</ResultButton>
+                            <TransversalResultsButton 
+                                diagram='ndMaxResistanceDiagramPoints'
+                                forces='ndMaxSolicitingForces'
+                                title='NdMAX - Envoltórias'
+                                disabled = {!state.results.isResultsAvailable}>
+                                    Nd
+                            </TransversalResultsButton>
+                            <TransversalResultsButton 
+                                diagram='mxMaxResistanceDiagramPoints'
+                                forces='mxMaxSolicitingForces'
+                                title='MxMAX - Envoltórias'>Mx</TransversalResultsButton>
+                            <TransversalResultsButton 
+                                diagram='myMaxResistanceDiagramPoints'
+                                forces='myMaxSolicitingForces'
+                                title='MyMAX - Envoltórias'>My</TransversalResultsButton>
                         </div>
                         <div className="subtitle">Esforços Mínimos</div>
                         <div className="min">
-                            <ResultButton result='ndForces' unit='kN' title='Nd (kN)'>Nd</ResultButton>
-                            <ResultButton result='ndForces' unit='kN' title='Nd (kN)'>Mx</ResultButton>
-                            <ResultButton result='ndForces' unit='kN' title='Nd (kN)'>My</ResultButton>
+                            <TransversalResultsButton 
+                                diagram='ndMinResistanceDiagramPoints'
+                                forces='ndMinSolicitingForces'
+                                title='NdMIN - Envoltórias'>Nd</TransversalResultsButton>
+                            <TransversalResultsButton 
+                                diagram='mxMinResistanceDiagramPoints'
+                                forces='mxMinSolicitingForces'
+                                title='MxMIN - Envoltórias'>Mx</TransversalResultsButton>
+                            <TransversalResultsButton 
+                                diagram='myMinResistanceDiagramPoints'
+                                forces='myMinSolicitingForces'
+                                title='MyMIN - Envoltórias'>My</TransversalResultsButton>
                         </div>
                     </div>
                 </div>

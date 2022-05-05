@@ -14,8 +14,8 @@ const initialState:IInputState = {
     uxRestrictionBottom: true,
     uyRestrictionBottom: true,
     uzRestrictionBottom: true,
-    rxRestrictionBottom: false,
-    ryRestrictionBottom: false,
+    rxRestrictionBottom: true,
+    ryRestrictionBottom: true,
     uxRestrictionTop: false,
     uyRestrictionTop: false,
     uzRestrictionTop: false,
@@ -78,11 +78,17 @@ const initialState:IInputState = {
         myMaxSolicitingForces: null,
         anglesSolicitingForces: null,
     },
-    resultDisplay: {
+    longitudinalDisplayResults: {
         result: 'ndForces',
         title: 'Nd (kN)',
         unit: 'kN'
-    }
+    },
+    transversalDisplayResults: {
+        diagram: 'ndMaxResistanceDiagramPoints',
+        forces: 'ndMaxSolicitingForces',
+        title: 'NdMAX - Envoltorias'
+    },
+    currentResultType: "longitudinal"
     
 }
 
@@ -258,10 +264,15 @@ function reducer(state:IInputState, action:IInputAction) {
             }
         }
 
-        case 'display-results': {
-            console.log('kkkk')
+        case 'display-longitudinal-results': {
             return {
-                ...state, resultDisplay: action.payload
+                ...state, longitudinalDisplayResults: action.payload, currentResultType: "longitudinal"
+            }
+        }
+
+        case 'display-transversal-results': {
+            return {
+                ...state, transversalDisplayResults: action.payload, currentResultType: "transversal"
             }
         }
 

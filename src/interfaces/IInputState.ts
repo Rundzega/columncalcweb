@@ -1,7 +1,8 @@
 import { IRebarList } from "./IRebarList";
 import { IRectangleList } from "./IRectangleList";
 import { IResults } from "./IResults";
-import { IResultsDisplay } from "./IResultsDisplay";
+import { ILongitudinalResultsDisplay } from "./ILongitudinalResultsDisplay";
+import { ITransversalResultsDisplay } from "./ITransversalResultsDisplay";
 
 export interface IInputState  {
     length: number,
@@ -48,6 +49,8 @@ export interface IInputState  {
     displacementTolerance: number,
     forcesTolerance: number,
     neutralAxisTolerance: number,
-    results: IResults;
-    resultDisplay: IResultsDisplay
+    results: IResults,
+    longitudinalDisplayResults: ILongitudinalResultsDisplay,
+    transversalDisplayResults: ITransversalResultsDisplay,
+    currentResultType: string
 }
