@@ -136,14 +136,14 @@ function Materials() {
 
           </form>
         </div>
-        <div className="navigation-buttons">
+        <footer className="navigation-buttons">
           <div className="nav-button">
             <PreviousPageButton to='geometry'  />
           </div>
           <div className="nav-button">
             <NextPageButton to='cross-section'/>
           </div>
-        </div>
+        </footer>
       </div>
     </>
   );

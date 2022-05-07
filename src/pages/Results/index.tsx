@@ -5,11 +5,17 @@ import CalculateButton from '../../components/CalculateButton';
 import { LongitudinalResultSVG } from '../../components/LongitudinalResultSVG';
 import { TransversalResultSVG } from '../../components/TransversalResultSVG';
 import { TransversalResultsButton } from '../../components/TransversalResultButton';
+import { useState } from 'react';
+import { Loading } from '../../components/Loading';
+import PreviousPageButton from '../../components/PreviousPageButton';
+import NextPageButton from '../../components/NextPageButton';
+
 
 
 function Results() {
 
     const { state } = useColumnDataContext();
+    const [isCalculating, setIsCalculating] = useState(false)
 
 
     return(
@@ -29,7 +35,12 @@ function Results() {
                     </TransversalResultSVG>
             }
                 <div className="calculate-button">
-                    <CalculateButton>CALCULAR</CalculateButton></div>
+                    <CalculateButton
+                        onCalculateClick={setIsCalculating}
+                    >
+                        { isCalculating ? <Loading /> : 'CALCULAR'}
+                    </CalculateButton>
+                </div>
                 <div className="sub-container" id="longitudinal-results">
                     <div className="title">Resultados do Pilar</div>
                     <div className="subtitle">Esforços</div>     
@@ -82,6 +93,14 @@ function Results() {
                         </div>
                     </div>
                 </div>
+                <footer className="navigation-buttons">
+                    <div className="nav-button">
+                        <PreviousPageButton to='discretization'  />
+                    </div>
+                    <div className="nav-button">
+                        <NextPageButton to='#' disabled/>
+                    </div>
+                </footer>
             </div>
         </>
     )

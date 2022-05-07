@@ -297,14 +297,14 @@ function Geometry() {
             </form>
           </div>
         </div>
-        <div className="navigation-buttons">
+        <footer className="navigation-buttons">
           <div className="nav-button">
               <PreviousPageButton disabled to='' />
           </div>
           <div className="nav-button">
               <NextPageButton to='materials'/>
           </div>
-        </div>
+        </footer>
       </div>
     </>
   );

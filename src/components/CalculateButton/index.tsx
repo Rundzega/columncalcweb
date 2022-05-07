@@ -1,10 +1,19 @@
+import { AxiosError } from 'axios';
 import React, { ButtonHTMLAttributes } from 'react'
 import { useColumnDataContext } from '../../hooks/useColumnDataContext';
+import { IResponse } from '../../interfaces/IResponse';
 import { ResultsService } from '../../services/ResultsService';
 import '../../styles/calculate-button.scss'
+import errorMsg from '../../utilities/errorMsg';
 import { parseColumnData } from '../../utilities/parseColumnData';
+import sucessMsg from '../../utilities/sucessMsg';
 
-function CalculateButton( props:ButtonHTMLAttributes<HTMLButtonElement> ) {
+
+type CalculateButtonPRops = ButtonHTMLAttributes<HTMLButtonElement> & {
+    onCalculateClick: (type: boolean) => void;
+}
+
+function CalculateButton( props:CalculateButtonPRops ) {
 
     const { state, dispatch } = useColumnDataContext();
 
@@ -14,16 +23,21 @@ function CalculateButton( props:ButtonHTMLAttributes<HTMLButtonElement> ) {
 
         <button 
             className='calculate'
-            onClick={() => {
-                const response = ResultsService.ColumnResultsService(columnData)
+            onClick={async () => {
+                props.onCalculateClick(true)
+                const response = await ResultsService.ColumnResultsService(columnData)
                     .then((response) => {
                     const { data } = response
                     console.log(data)
                     dispatch({type: 'update-results', payload: data})
+                    sucessMsg();
+                
                     })
-                    .catch((err) => {
-                    console.log(err)
+                    .catch((err:AxiosError<IResponse>) => {
+                    console.log()
+                    errorMsg(err.response?.data.message)
                     })
+                    props.onCalculateClick(false)
                 }
             }
             {...props}

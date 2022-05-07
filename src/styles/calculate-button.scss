@@ -23,6 +23,8 @@
     vertical-align: middle;
     white-space: nowrap;
     transition: 200ms;
+    display: flex;
+    justify-content: center;
 }
 
 .calculate:focus:not(:focus-visible):not(.focus-visible) {

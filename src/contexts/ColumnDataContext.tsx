@@ -113,7 +113,7 @@ function reducer(state:IInputState, action:IInputAction) {
             }]    
             
             return {
-                ...state, elementCounter: (state.elementCounter + 1), rectangleList: newRectangleList, isResultsAvailable: false
+                ...state, elementCounter: (state.elementCounter + 1), rectangleList: newRectangleList, results: {...state.results, isResultsAvailable: false }
             }
             
         } 
@@ -129,7 +129,7 @@ function reducer(state:IInputState, action:IInputAction) {
             }]    
             
             return {
-                ...state, rebarList: newRebarList, elementCounter: (state.elementCounter + 1), isResultsAvailable: false
+                ...state, rebarList: newRebarList, elementCounter: (state.elementCounter + 1), results: {...state.results, isResultsAvailable: false }
             }
         }
 
@@ -187,7 +187,7 @@ function reducer(state:IInputState, action:IInputAction) {
 
 
             return {
-                ...state, rebarList: rebarListAfterDelete, rectangleList: rectanglesDeletedRow, selectedElement: null, isResultsAvailable: false,
+                ...state, rebarList: rebarListAfterDelete, rectangleList: rectanglesDeletedRow, selectedElement: null, results: {...state.results, isResultsAvailable: false }
             }
 
         }
@@ -209,7 +209,7 @@ function reducer(state:IInputState, action:IInputAction) {
             }
 
             return {
-                ...state, rebarList: rebarsDeletedRow, selectedElement: null, isResultsAvailable: false
+                ...state, rebarList: rebarsDeletedRow, selectedElement: null, results: {...state.results, isResultsAvailable: false }
             }
         }        
         
