@@ -40,6 +40,6 @@ export const SidebarData = [
         title: 'Resultados',
         path: '/results',
         icon: <VscIcons.VscGraphLine />,
-        cName: 'nav-text'
+        cName: ''
     },
 ]

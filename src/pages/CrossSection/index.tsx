@@ -1,7 +1,7 @@
+/* eslint-disable no-lone-blocks */
 import React, { SVGProps, useEffect, useRef, useState } from 'react'
 import AddButton from '../../components/AddButton';
 import RemoveButton from '../../components/RemoveButton';
-import '../../styles/cross-section.scss'
 import errorMsg from '../../utilities/errorMsg';
 import handleValidateNumber from '../../utilities/handleValidateNumber';
 import handleValidateMinimum from '../../utilities/handleValidateMinimum';
@@ -53,7 +53,7 @@ function CrossSection() {
         
         {Object.values(state.rectangleList).map((rectangle) => {
             
-            const classStyle = rectangle.isHighlighted ? 'svgSelect' : 'svgElementRect'
+            const classStyle = rectangle.isHighlighted ? 'fill-brandPurple-300 stroke-black duration-150 stroke-[0.25px]' : 'fill-gray-500 stroke-black hover:fill-brandBlue-300 duration-150 stroke-[0.25px]'
 
             svg.select('#rects')
             .append('rect')
@@ -134,7 +134,7 @@ function CrossSection() {
         
         {Object.values(state.rebarList).map((rebar) => {
             
-            const classStyle = rebar.isHighlighted ? 'svgSelect' : 'svgElementRebar'
+            const classStyle = rebar.isHighlighted ? 'fill-brandPurple-300 stroke-black duration-150 stroke-[0.1px]' : 'fill-red-600 stroke-black hover:fill-brandBlue-300 duration-150 stroke-[0.1px]'
             
             svg.select('#rebars')
             .append('circle')
@@ -190,74 +190,94 @@ function CrossSection() {
 
     return (
         <>
-            <div id="cross-section-container">
-                <h2>Seção Transversal</h2>
-                <div className="svg-container" id="svg-d3">
-                    <svg className="svg" ref={crossSectionSvg}></svg>
+            <div className="flex flex-col justify-center max-w-3xl items-center m-auto py-6 px-9 rounded-3xl">
+                <h2 className="text-brandPurple-300 text-2xl font-bold">Seção Transversal</h2>
+                <div className="flex border-brandPurple-300 rounded-2xl bg-white w-full justify-center text-center items-center mb-3 aspect-square" id="svg-d3">
+                    <svg className='w-[90%] h-[90%]' ref={crossSectionSvg}></svg>
                 </div>
-                <div className="sub-container">
-                    <div className="title">Adicionar Seção</div>
-                    <div className="divider">
-                        <div className="input">
-                            <form action="#">
-                                <div className="input-box">
-                                    <span>Largura (cm)</span>
+                <div className="border-brandPurple-300 w-full p-5 my-3 rounded-2xl bg-white">
+                    <div className="text-2xl font-bold relative mb-2 text-brandGreen-300 before:absolute before:bottom-0 before:h-1 before:w-10 before:bg-brandPurple-300 z-10">Adicionar Seção</div>
+                    <div className="flex flex-col justify-between items-stretch h-full md:flex-row">
+                        <div className="w-full h-full justify-between flex flex-col md:w-[calc(100%/2-0.75rem)]">
+                            <form className='flex flex-wrap justify-between' action="#">
+                                <div className="py-1 w-full flex flex-col">
+                                    <span className='ml-2 text-sm text-brandGreen-300'>Largura (cm)</span>
                                     <input type="number" 
                                     min={0}
                                     required
                                     defaultValue={rectProps.width}
                                     onBlur={(e) => {
                                         if(handleValidateMinimum(e, 1, ('Largura deve ser um número positivo'))) {
+
+                                            e.target.setAttribute('class', "w-full bg-white rounded-2xl border-brandGreen-300 text-brandGreen-300 text-sm duration-200 disabled:bg-[#CFCFCF] py-1 mb-2 focus:border-brandPurple-300 focus:ring-offset-brandPurple-300 focus:ring-1 focus:outline-none resize-none" )
                                             setRectProps({...rectProps, width:parseFloat(e.target.value)})
                                             return
+                                        } else {
+                                            e.target.setAttribute('class', "w-full bg-white rounded-2xl border-red-500 text-red-500 text-sm duration-200 disabled:bg-[#CFCFCF] py-1 mb-2 focus:border-brandPurple-300 focus:ring-offset-brandPurple-300 focus:ring-1 focus:outline-none resize-none ")
                                         }
                                         e.target.value = String(rectProps.width)
-                                    }} />
+                                    }}
+                                    className="w-full bg-white rounded-2xl border-brandGreen-300 text-brandGreen-300 text-sm duration-200 disabled:bg-[#CFCFCF] py-1 mb-2 focus:border-brandPurple-300 focus:ring-offset-brandPurple-300 focus:ring-1 focus:outline-none resize-none" />
                                 </div>
-                                <div className="input-box">
-                                    <span>Altura (cm)</span>
+                                <div className="py-1 w-full flex flex-col">
+                                    <span className='ml-2 text-sm text-brandGreen-300'>Altura (cm)</span>
                                     <input type="number"
                                     min={0} 
                                     required 
                                     defaultValue={rectProps.height}
                                     onBlur={(e) => {
                                         if(handleValidateMinimum(e, 1, 'Altura deve ser um número positivo')) {
+
+                                            e.target.setAttribute('class', "w-full bg-white rounded-2xl border-brandGreen-300 text-brandGreen-300 text-sm duration-200 disabled:bg-[#CFCFCF] py-1 mb-2 focus:border-brandPurple-300 focus:ring-offset-brandPurple-300 focus:ring-1 focus:outline-none resize-none" )
                                             setRectProps({...rectProps, height:parseFloat(e.target.value)})
                                             return
+                                        } else {
+                                            e.target.setAttribute('class', "w-full bg-white rounded-2xl border-red-500 text-red-500 text-sm duration-200 disabled:bg-[#CFCFCF] py-1 mb-2 focus:border-brandPurple-300 focus:ring-offset-brandPurple-300 focus:ring-1 focus:outline-none resize-none ")
                                         }
                                         e.target.value = String(rectProps.height)
-                                    }} />
+                                    }}
+                                    className="w-full bg-white rounded-2xl border-brandGreen-300 text-brandGreen-300 text-sm duration-200 disabled:bg-[#CFCFCF] py-1 mb-2 focus:border-brandPurple-300 focus:ring-offset-brandPurple-300 focus:ring-1 focus:outline-none resize-none" />
                                 </div>
-                                <div className="input-box">
-                                    <span>Coord. X CG (cm)</span>
+                                <div className="py-1 w-full flex flex-col">
+                                    <span className='ml-2 text-sm text-brandGreen-300'>Coord. X CG (cm)</span>
                                     <input 
                                         type="number" 
                                         required 
                                         defaultValue={rectProps.xCoord}
                                         onBlur={(e) => {
                                             if(handleValidateNumber(e, 'A coordenada X do CG deve ser um número')) {
+
+                                                e.target.setAttribute('class', "w-full bg-white rounded-2xl border-brandGreen-300 text-brandGreen-300 text-sm duration-200 disabled:bg-[#CFCFCF] py-1 mb-2 focus:border-brandPurple-300 focus:ring-offset-brandPurple-300 focus:ring-1 focus:outline-none resize-none" )
                                                 setRectProps({...rectProps, xCoord:parseFloat(e.target.value)})
                                                 return
+                                            } else {
+                                                e.target.setAttribute('class', "w-full bg-white rounded-2xl border-red-500 text-red-500 text-sm duration-200 disabled:bg-[#CFCFCF] py-1 mb-2 focus:border-brandPurple-300 focus:ring-offset-brandPurple-300 focus:ring-1 focus:outline-none resize-none ")
                                             }
                                             e.target.value = String(rectProps.xCoord);
-                                        }} />
+                                        }}
+                                        className="w-full bg-white rounded-2xl border-brandGreen-300 text-brandGreen-300 text-sm duration-200 disabled:bg-[#CFCFCF] py-1 mb-2 focus:border-brandPurple-300 focus:ring-offset-brandPurple-300 focus:ring-1 focus:outline-none resize-none" />
                                 </div>
-                                <div className="input-box">
-                                    <span>Coord. Y CG (cm)</span>
+                                <div className="py-1 w-full flex flex-col">
+                                    <span className='ml-2 text-sm text-brandGreen-300'>Coord. Y CG (cm)</span>
                                     <input 
                                         type="number" 
                                         required 
                                         defaultValue={rectProps.yCoord}
                                         onBlur={(e) => {
                                             if(handleValidateNumber(e, 'A coordenada Y do CG deve ser um número')) {
+
+                                                e.target.setAttribute('class', "w-full bg-white rounded-2xl border-brandGreen-300 text-brandGreen-300 text-sm duration-200 disabled:bg-[#CFCFCF] py-1 mb-2 focus:border-brandPurple-300 focus:ring-offset-brandPurple-300 focus:ring-1 focus:outline-none resize-none" )
                                                 setRectProps({...rectProps, yCoord:parseFloat(e.target.value)})
                                                 return
+                                            } else {
+                                                e.target.setAttribute('class', "w-full bg-white rounded-2xl border-red-500 text-red-500 text-sm duration-200 disabled:bg-[#CFCFCF] py-1 mb-2 focus:border-brandPurple-300 focus:ring-offset-brandPurple-300 focus:ring-1 focus:outline-none resize-none ")
                                             }
                                             e.target.value = String(rectProps.yCoord);
-                                        }} />
+                                        }}
+                                        className="w-full bg-white rounded-2xl border-brandGreen-300 text-brandGreen-300 text-sm duration-200 disabled:bg-[#CFCFCF] py-1 mb-2 focus:border-brandPurple-300 focus:ring-offset-brandPurple-300 focus:ring-1 focus:outline-none resize-none" />
                                 </div>
                             </form>
-                            <div className="button-class">
+                            <div>
                                 <AddButton
                                 onClick={() => {
                                     if (rectProps.width > 0 && rectProps.height > 0 && !Number.isNaN(rectProps.xCoord) && !Number.isNaN(rectProps.yCoord) ) {
@@ -279,18 +299,18 @@ function CrossSection() {
                                 />
                             </div>
                         </div>
-                        <div className="table">
-                            <div className="table-content first">
-                                <table className={`table-class ${state.rectangleList.length > 5 ? 'long' : 'short'}`}>
+                        <div className="w-full text-sm justify-between flex flex-col mt-4 md:w-[calc(100%/2-0.75rem)] md:mt-0">
+                            <div className="border-brandGreen-300 border-[1px] h-full w-full mb-3 rounded-2xl overflow-hidden max-h-[252px]">
+                                <table className={state.rectangleList.length > 5 ? 'text-sm block justify-between w-full max-h-full text-center border-collapse rounded-2xl resize-none overflow-x-hidden overflow-y-scroll block scrollbar scrollbar-thumb-brandGreen-300 scrollbar-track-transparent scrollbar-thin' : 'text-sm block justify-between w-full max-h-full text-center border-collapse rounded-t-2xl overflow-x-hidden'}>
                                     <thead>
                                         <tr>
-                                            <th>Largura</th>
-                                            <th>Altura</th>
-                                            <th>XCG</th>
-                                            <th>YCG</th>
+                                            <th className='sticky top-0 text-white bg-brandGreen-300 border-gray-400 border-[0.5px] overflow-y-auto w-40'>Largura</th>
+                                            <th className='sticky top-0 text-white bg-brandGreen-300 border-gray-400 border-[0.5px] overflow-y-auto w-40'>Altura</th>
+                                            <th className='sticky top-0 text-white bg-brandGreen-300 border-gray-400 border-[0.5px] overflow-y-auto w-40'>XCG</th>
+                                            <th className='sticky top-0 text-white bg-brandGreen-300 border-gray-400 border-[0.5px] overflow-y-auto w-40'>YCG</th>
                                         </tr>
                                     </thead>
-                                    <tbody className='table-body' ref={rectTable}>
+                                    <tbody ref={rectTable}>
                                         {state.rectangleList.map((rectangle) => {
                                             return(
                                                 <tr 
@@ -299,36 +319,37 @@ function CrossSection() {
                                                 onClick={(e) => {
                                                     dispatch({type:'select-element', payload:{element: e.currentTarget}})
                                                 }}
-                                                className = {rectangle.isHighlighted ? 'selected' : ''}>
-                                                    <td>{rectangle.width}</td>
-                                                    <td>{rectangle.height}</td>
-                                                    <td>{rectangle.xCenterCoordinate}</td>
-                                                    <td>{rectangle.yCenterCoordinate}</td>
+                                                className = {rectangle.isHighlighted ? 'bg-brandPurple-300 h-11 text-white cursor-pointer duration-100' : 'cursor-pointer duration-100 h-9 hover:bg-brandBlue-300 hover:h-11 hover:overflow-hidden'}>
+                                                    <td className={rectangle.isHighlighted ? 'text-white w-40 border-gray-400 border-[0.5px]' : 'text-brandGreen-300 w-40 border-gray-400 border-[0.5px]'}>{rectangle.width}</td>
+                                                    <td className={rectangle.isHighlighted ? 'text-white w-40 border-gray-400 border-[0.5px]' : 'text-brandGreen-300 w-40 border-gray-400 border-[0.5px]'}>{rectangle.height}</td>
+                                                    <td className={rectangle.isHighlighted ? 'text-white w-40 border-gray-400 border-[0.5px]' : 'text-brandGreen-300 w-40 border-gray-400 border-[0.5px]'}>{rectangle.xCenterCoordinate}</td>
+                                                    <td className={rectangle.isHighlighted ? 'text-white w-40 border-gray-400 border-[0.5px]' : 'text-brandGreen-300 w-40 border-gray-400 border-[0.5px]'}>{rectangle.yCenterCoordinate}</td>
                                                 </tr>
                                             )
                                         })}
                                     </tbody>
                                 </table>
                             </div>
-                            <div className="button-class">
+                            <div>
                                 <RemoveButton 
                                     onClick={() => {
                                         dispatch({type:'remove-rectangle'})
                                     }}
                                 />
                             </div>
+
                         </div>
 
                     </div>
                 </div>
-                <div className="sub-container">
-                    <div className="title">Adicionar Barra</div>
-                    <div className="divider">
-                        <div className="input">
-                            <form action="#" id='add-rect'>
-                                <div className="input-box select">
-                                    <span>Diâmetro (mm)</span>
-                                    <select 
+                <div className="border-brandPurple-300 w-full p-5 my-3 rounded-2xl bg-white">
+                    <div className="text-2xl font-bold relative mb-2 text-brandGreen-300 before:absolute before:bottom-0 before:h-1 before:w-10 before:bg-brandPurple-300 z-10">Adicionar Barra</div>
+                    <div className="flex flex-col justify-between items-stretch h-full md:flex-row">
+                        <div className="w-full h-full justify-between flex flex-col md:w-[calc(100%/2-0.75rem)] ">
+                            <form className='flex flex-wrap justify-between' action="#" id='add-rect'>
+                                <div className="py-1 flex flex-col w-full justify-between">
+                                    <span className='ml-2 text-sm text-brandGreen-300'>Diâmetro (mm)</span>
+                                    <select className='cursor-pointer bg-white text-brandGreen-300 px-3 text-base rounded-2xl border-brandGreen-300 py-1 focus:outline-none focus:border-brandPurple-300 focus:ring-0'
                                         name="diameter"
                                         required 
                                         onChange={(e) => {
@@ -347,36 +368,46 @@ function CrossSection() {
                                         <option value="40.0">40.0</option>
                                     </select>
                                 </div>
-                                <div className="input-box">
-                                    <span>Coord. X CG (cm)</span>
+                                <div className="py-1 w-full flex flex-col">
+                                    <span className='ml-2 text-sm text-brandGreen-300'>Coord. X CG (cm)</span>
                                     <input 
                                         type="number" 
                                         required 
                                         defaultValue={0}
                                         onBlur={(e) => {
                                             if(handleValidateNumber(e, 'A coordenada X do CG deve ser um número')) {
+
+                                                e.target.setAttribute('class', "w-full bg-white rounded-2xl border-brandGreen-300 text-brandGreen-300 text-sm duration-200 disabled:bg-[#CFCFCF] py-1 mb-2 focus:border-brandPurple-300 focus:ring-offset-brandPurple-300 focus:ring-1 focus:outline-none resize-none" )
                                                 setRebarProps({...rebarProps, xCoord:parseFloat(e.target.value)})
                                                 return
+                                            } else {
+                                                e.target.setAttribute('class', "w-full bg-white rounded-2xl border-red-500 text-red-500 text-sm duration-200 disabled:bg-[#CFCFCF] py-1 mb-2 focus:border-brandPurple-300 focus:ring-offset-brandPurple-300 focus:ring-1 focus:outline-none resize-none ")
                                             }
                                             e.target.value = String(rebarProps.xCoord);
-                                        }} />
+                                        }}
+                                        className="w-full bg-white rounded-2xl border-brandGreen-300 text-brandGreen-300 text-sm duration-200 disabled:bg-[#CFCFCF] py-1 mb-2 focus:border-brandPurple-300 focus:ring-offset-brandPurple-300 focus:ring-1 focus:outline-none resize-none" />
                                 </div>
-                                <div className="input-box">
-                                    <span>Coord. Y CG (cm)</span>
+                                <div className="py-1 w-full flex flex-col">
+                                    <span className='ml-2 text-sm text-brandGreen-300'>Coord. Y CG (cm)</span>
                                     <input 
                                         type="number" 
                                         required 
                                         defaultValue={0}
                                         onBlur={(e) => {
                                             if(handleValidateNumber(e, 'A coordenada Y do CG deve ser um número')) {
+
+                                                e.target.setAttribute('class', "w-full bg-white rounded-2xl border-brandGreen-300 text-brandGreen-300 text-sm duration-200 disabled:bg-[#CFCFCF] py-1 mb-2 focus:border-brandPurple-300 focus:ring-offset-brandPurple-300 focus:ring-1 focus:outline-none resize-none" )
                                                 setRebarProps({...rebarProps, yCoord:parseFloat(e.target.value)})
                                                 return
+                                            } else {
+                                                e.target.setAttribute('class', "w-full bg-white rounded-2xl border-red-500 text-red-500 text-sm duration-200 disabled:bg-[#CFCFCF] py-1 mb-2 focus:border-brandPurple-300 focus:ring-offset-brandPurple-300 focus:ring-1 focus:outline-none resize-none ")
                                             }
                                             e.target.value = String(rebarProps.yCoord);
-                                        }} />
+                                        }}
+                                        className="w-full bg-white rounded-2xl border-brandGreen-300 text-brandGreen-300 text-sm duration-200 disabled:bg-[#CFCFCF] py-1 mb-2 focus:border-brandPurple-300 focus:ring-offset-brandPurple-300 focus:ring-1 focus:outline-none resize-none" />
                                 </div>
                             </form>
-                            <div className="button-class">
+                            <div>
                                 <AddButton
                                     onClick={() => {
 
@@ -400,17 +431,17 @@ function CrossSection() {
                                 />
                             </div>
                         </div>
-                        <div className="table">
-                            <div className="table-content second">
-                                <table className={`table-class ${state.rebarList.length > 4 ? 'long' : 'short'}`}>
+                        <div className="w-full text-sm justify-between flex flex-col mt-4 md:w-[calc(100%/2-0.75rem)] md:mt-0">
+                            <div className="border-brandGreen-300 border-[1px] h-full w-full mb-3 rounded-2xl overflow-hidden max-h-[180px] ">
+                                <table className={state.rebarList.length > 4 ? 'text-sm block justify-between w-full max-h-full text-center rounded-2xl resize-none overflow-x-hidden overflow-y-scroll scrollbar scrollbar-thumb-brandGreen-300 scrollbar-track-transparent scrollbar-thin' : 'text-sm block justify-between w-full max-h-full text-center border-collapse rounded-t-2xl overflow-x-hidden'}>
                                     <thead>
                                         <tr>
-                                            <th>Diâmetro</th>
-                                            <th>XCG</th>
-                                            <th>YCG</th>
+                                            <th className='sticky top-0 text-white bg-brandGreen-300 border-gray-400 border-[0.5px] overflow-y-auto w-40'>Diâmetro</th>
+                                            <th className='sticky top-0 text-white bg-brandGreen-300 border-gray-400 border-[0.5px] overflow-y-auto w-40'>XCG</th>
+                                            <th className='sticky top-0 text-white bg-brandGreen-300 border-gray-400 border-[0.5px] overflow-y-auto w-40'>YCG</th>
                                         </tr>
                                     </thead>
-                                    <tbody className='table-body' ref={rebarTable}>
+                                    <tbody ref={rebarTable}>
                                         {state.rebarList.map((rebar) => {
                                         return(
                                             <tr 
@@ -419,18 +450,18 @@ function CrossSection() {
                                             onClick={(e) => {
                                                 dispatch({type:'select-element', payload:{element: e.currentTarget}})
                                             }}
-                                            className = {rebar.isHighlighted ? 'selected' : ''}
+                                            className = {rebar.isHighlighted ? 'bg-brandPurple-300 h-11 text-white cursor-pointer duration-100' : 'cursor-pointer duration-100 h-9 hover:bg-brandBlue-300 hover:h-11 hover:overflow-hidden'}
                                             >
-                                                <td>{rebar.diameter}</td>
-                                                <td>{rebar.xCenterCoordinate}</td>
-                                                <td>{rebar.yCenterCoordinate}</td>
+                                                <td className={rebar.isHighlighted ? 'text-white w-40 border-gray-400 border-[0.5px]' : 'text-brandGreen-300 w-40 border-gray-400 border-[0.5px]'}>{rebar.diameter}</td>
+                                                <td className={rebar.isHighlighted ? 'text-white w-40 border-gray-400 border-[0.5px]' : 'text-brandGreen-300 w-40 border-gray-400 border-[0.5px]'}>{rebar.xCenterCoordinate}</td>
+                                                <td className={rebar.isHighlighted ? 'text-white w-40 border-gray-400 border-[0.5px]' : 'text-brandGreen-300 w-40 border-gray-400 border-[0.5px]'}>{rebar.yCenterCoordinate}</td>
                                             </tr>
                                             )
                                         })}
                                     </tbody>
                                 </table>
                             </div>
-                            <div className="button-class">
+                            <div>
                                 <RemoveButton
                                     onClick={() => {
                                         dispatch({type: 'remove-rebar'})
@@ -441,11 +472,11 @@ function CrossSection() {
                         </div>
                     </div>
                 </div>
-                <footer className="navigation-buttons">
-                    <div className="nav-button">
+                <footer className="w-full flex flex-row justify-between items-center">
+                    <div>
                         <PreviousPageButton to='materials' />
                     </div>
-                    <div className="nav-button">
+                    <div>
                         <NextPageButton to='discretization' />
                     </div>
                 </footer>

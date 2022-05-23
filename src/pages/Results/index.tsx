@@ -1,5 +1,4 @@
 import { useColumnDataContext } from '../../hooks/useColumnDataContext';
-import '../../styles/results.scss'
 import { LongitudinalResultButton } from '../../components/LongitudinalResultButton';
 import CalculateButton from '../../components/CalculateButton';
 import { LongitudinalResultSVG } from '../../components/LongitudinalResultSVG';
@@ -20,8 +19,8 @@ function Results() {
 
     return(
         <>
-            <div id="results-container">
-                <h2>Results</h2>
+            <div className="flex flex-col justify-center max-w-3xl items-center m-auto py-6 px-9 rounded-3xl">
+                <h2 className="text-brandPurple-300 text-2xl font-bold">Results</h2>
                 {state.currentResultType == 'longitudinal' ? 
                     <LongitudinalResultSVG 
                         result = {state.longitudinalDisplayResults.result} 
@@ -34,32 +33,32 @@ function Results() {
                         title={state.transversalDisplayResults.title}>
                     </TransversalResultSVG>
             }
-                <div className="calculate-button">
+                <div className="w-full mb-3">
                     <CalculateButton
                         onCalculateClick={setIsCalculating}
                     >
                         { isCalculating ? <Loading /> : 'CALCULAR'}
                     </CalculateButton>
                 </div>
-                <div className="sub-container" id="longitudinal-results">
-                    <div className="title">Resultados do Pilar</div>
-                    <div className="subtitle">Esforços</div>     
-                    <div className="forces">
+                <div className="border-brandPurple-300 w-full p-5 my-3 rounded-2xl bg-white" id="longitudinal-results">
+                    <div className="text-2xl font-bold relative mb-2 text-brandGreen-300 before:absolute before:bottom-0 before:h-1 before:w-10 before:bg-brandPurple-300 z-10">Resultados do Pilar</div>
+                    <div className="text-base text-brandGreen-300 mt-4 font-semibold">Esforços</div>     
+                    <div className="md:flex flex-row items-center justify-center p-2 gap-x-3">
                         <LongitudinalResultButton result='ndForces' unit='kN' title='Nd (kN)'>Nd</LongitudinalResultButton>
                         <LongitudinalResultButton result='mxForces' unit='kN.m' title='Mxd (kN.m)'>Mx</LongitudinalResultButton>
                         <LongitudinalResultButton result='myForces' unit='kN.m' title='Myd (kN.m)'>My</LongitudinalResultButton>
                     </div>
-                    <div className="subtitle">Deslocamentos</div>
-                    <div className="displacements">
+                    <div className="text-base text-brandGreen-300 mt-4 font-semibold">Deslocamentos</div>
+                    <div className="md:flex flex-row items-center justify-center p-2 gap-x-3">
                         <LongitudinalResultButton result='uxDisplacements' unit='cm' title='ux (cm)'>ux</LongitudinalResultButton>
                         <LongitudinalResultButton result='uyDisplacements' unit='cm' title='uy (cm)'>uy</LongitudinalResultButton>
                     </div>
                 </div>
-                <div className="sub-container" id="transversal-results">
-                    <div className="title">Resultados da Seção Transversal</div>
-                    <div className="cross-section-results">
-                        <div className="subtitle">Esforços Máximos</div>
-                        <div className="max">
+                <div className="border-brandPurple-300 w-full p-5 my-3 rounded-2xl bg-white" id="transversal-results">
+                    <div className="text-2xl font-bold relative mb-2 text-brandGreen-300 before:absolute before:bottom-0 before:h-1 before:w-10 before:bg-brandPurple-300 z-10">Resultados da Seção Transversal</div>
+                    <div>
+                        <div className="text-base text-brandGreen-300 mt-4 font-semibold">Esforços Máximos</div>
+                        <div className="md:flex flex-row items-center justify-center p-2 gap-x-3">
                             <TransversalResultsButton 
                                 diagram='ndMaxResistanceDiagramPoints'
                                 forces='ndMaxSolicitingForces'
@@ -76,8 +75,8 @@ function Results() {
                                 forces='myMaxSolicitingForces'
                                 title='MyMAX - Envoltórias'>My</TransversalResultsButton>
                         </div>
-                        <div className="subtitle">Esforços Mínimos</div>
-                        <div className="min">
+                        <div className="text-base text-brandGreen-300 mt-4 font-semibold">Esforços Mínimos</div>
+                        <div className="md:flex flex-row items-center justify-center p-2 gap-x-3">
                             <TransversalResultsButton 
                                 diagram='ndMinResistanceDiagramPoints'
                                 forces='ndMinSolicitingForces'
@@ -93,11 +92,11 @@ function Results() {
                         </div>
                     </div>
                 </div>
-                <footer className="navigation-buttons">
-                    <div className="nav-button">
+                <footer className="w-full flex flex-row justify-between items-center">
+                    <div>
                         <PreviousPageButton to='discretization'  />
                     </div>
-                    <div className="nav-button">
+                    <div>
                         <NextPageButton to='#' disabled/>
                     </div>
                 </footer>

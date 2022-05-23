@@ -3,7 +3,6 @@ import React, { ButtonHTMLAttributes } from 'react'
 import { useColumnDataContext } from '../../hooks/useColumnDataContext';
 import { IResponse } from '../../interfaces/IResponse';
 import { ResultsService } from '../../services/ResultsService';
-import '../../styles/calculate-button.scss'
 import errorMsg from '../../utilities/errorMsg';
 import { parseColumnData } from '../../utilities/parseColumnData';
 import sucessMsg from '../../utilities/sucessMsg';
@@ -22,7 +21,7 @@ function CalculateButton( props:CalculateButtonPRops ) {
     return(
 
         <button 
-            className='calculate'
+            className='w-full mt-3 appearance-none bg-brandPurple-300 rounded-[66px] text-white cursor-pointer text-xl font-semibold py-3 px-6 relative text-center flex justify-center duration-200 hover:bg-brandPurple-400 focus:outline-none disabled:opacity-50 disabled:text-opacity-50 disabled:cursor-default'
             onClick={async () => {
                 props.onCalculateClick(true)
                 const response = await ResultsService.ColumnResultsService(columnData)

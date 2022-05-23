@@ -14,8 +14,8 @@ function App() {
   return (
     <>
       <BrowserRouter>
-        <Sidebar /> 
         <ColumnDataProvider>
+        <Sidebar /> 
           <Routes>
             <Route path="/" element={<Home />}></Route>
             <Route path="/geometry" element={<Geometry />}></Route>

@@ -3,7 +3,6 @@ import { useRef, useEffect } from "react";
 import { useColumnDataContext } from "../../hooks/useColumnDataContext";
 import { ITransversalResultsDisplay } from "../../interfaces/ITransversalResultsDisplay";
 import { fitLinearPolynomialFunction } from "../../utilities/fitLinearPolynomialFunction";
-import '../../styles/results-svg.scss';
 
 
 export function TransversalResultSVG({...props}: ITransversalResultsDisplay) {
@@ -260,8 +259,8 @@ export function TransversalResultSVG({...props}: ITransversalResultsDisplay) {
 
     return (
         <>
-            <div className="svg-container" id="svg-d3-results">
-                <svg className='svg-results'ref={resultsSvg}></svg>
+            <div className="flex border-brandPurple-300 rounded-2xl bg-white w-full justify-center text-center items-center mb-3 aspect-square" id="svg-d3-results">
+                <svg className='w-[90%] h-[90%]'ref={resultsSvg}></svg>
             </div>
         </>)
 }

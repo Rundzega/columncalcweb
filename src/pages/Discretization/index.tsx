@@ -1,6 +1,5 @@
 import React from 'react'
 import handleValidateMinimum from '../../utilities/handleValidateMinimum';
-import '../../styles/discretization.scss'
 import { Link } from 'react-router-dom';
 import NextPageButton from '../../components/NextPageButton';
 import PreviousPageButton from '../../components/PreviousPageButton';
@@ -63,17 +62,17 @@ function Discretization() {
     }
 
     return(
-        <div id="discretization-container">
-            <h2>Discretização</h2>
-            <div className="sub-container">
-                <div className="title">Critérios</div>
-                <form action="#">
+        <div className="flex flex-col justify-center max-w-3xl items-center m-auto py-6 px-9 rounded-3xl">
+            <h2 className="text-brandPurple-300 text-2xl font-bold">Discretização</h2>
+            <div className="border-brandPurple-300 w-full p-5 my-3 rounded-2xl bg-white">
+                <div className="text-2xl font-bold relative mb-2 text-brandGreen-300 before:absolute before:bottom-0 before:h-1 before:w-10 before:bg-brandPurple-300 z-10">Critérios</div>
+                <form className="flex flex-col justify-between p-2" action="#">
                     
                 {Object.entries(discretizationFields).map(([field, stateProp]) => {
                 
                 return (
-                  <div key={field} className="input-box">
-                    <span>{field}</span>
+                  <div key={field} className="w-[calc(100%/2 - 1.25rem)] flex flex-col -ml-5 px-2">
+                    <span className='ml-2 text-sm text-brandGreen-300 mb-1'>{field}</span>
                     <input
                     type="number"
                     required
@@ -83,10 +82,14 @@ function Discretization() {
                     
                       if(handleValidateMinimum(e, minValue, (`${field} deve ser um número mario do que ${minValue}`))) {
                         
+                        e.target.setAttribute('class', "w-full bg-white rounded-2xl border-brandGreen-300 text-brandGreen-300 text-sm duration-200 disabled:bg-[#CFCFCF] py-1 mb-2 focus:border-brandPurple-300 focus:ring-offset-brandPurple-300 focus:ring-1 focus:outline-none resize-none" )
                         dispatch({type: 'field', fieldName:stateProp.stringName, payload: parseFloat(e.currentTarget.value)})
+                      } else {
+                        e.target.setAttribute('class', "w-full bg-white rounded-2xl border-red-500 text-red-500 text-sm duration-200 disabled:bg-[#CFCFCF] py-1 mb-2 focus:border-brandPurple-300 focus:ring-offset-brandPurple-300 focus:ring-1 focus:outline-none resize-none ")
                       }
                     }}
                     min = "0" 
+                    className="w-full bg-white rounded-2xl border-brandGreen-300 text-brandGreen-300 text-sm duration-200 disabled:bg-[#CFCFCF] py-1 mb-2 focus:border-brandPurple-300 focus:ring-offset-brandPurple-300 focus:ring-1 focus:outline-none resize-none" 
                     />
                   </div>
                 )
@@ -94,11 +97,11 @@ function Discretization() {
 
                 </form>
             </div>
-            <footer className="navigation-buttons">
-                <div className="nav-button">
+            <footer className="w-full flex flex-row justify-between items-center">
+                <div>
                     <PreviousPageButton to='cross-section' />
                 </div>
-                <div className="nav-button">
+                <div>
                     <NextPageButton to='results'/>
                 </div>
             </footer>

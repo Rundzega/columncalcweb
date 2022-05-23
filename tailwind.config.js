@@ -1,7 +1,24 @@
 module.exports = {
   content: ["./src/**/*.tsx"],
   theme: {
-    extend: {},
+    extend: {
+      colors: {
+        brandGreen: {
+          300: '#71C562'
+        },
+        brandBlue: {
+          300: '#6271C5'
+        },
+        brandPurple: {
+          100: '#6E4C75',
+          300: '#8E3A9D',
+          400: '#9C32AF'
+        }
+      }
+    },
   },
-  plugins: [],
+  plugins: [
+    require('@tailwindcss/forms'),
+    require('tailwind-scrollbar')
+  ],
 }
