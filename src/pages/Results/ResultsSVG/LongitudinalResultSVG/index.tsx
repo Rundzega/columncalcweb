@@ -1,21 +1,14 @@
 import { select, scaleLinear, axisBottom } from "d3";
 import { useRef, useEffect } from "react";
-import { useColumnDataContext } from "../../hooks/useColumnDataContext";
-import { ILongitudinalResultsDisplay } from "../../interfaces/ILongitudinalResultsDisplay";
-
+import { useColumnDataContext } from "../../../../hooks/useColumnDataContext";
+import { ILongitudinalResultsDisplay } from "../../../../interfaces/ILongitudinalResultsDisplay";
 
 export function LongitudinalResultSVG({...props}: ILongitudinalResultsDisplay) {
-
     const { state } = useColumnDataContext();
-
     const resultsSvg = useRef<SVGSVGElement | null>(null)
     
     useEffect(() => {
-
-
-        const svg = select(resultsSvg.current)
-        
-        
+        const svg = select(resultsSvg.current)      
         const desiredResult = props.result
         const title = props.title
         const unit = props.unit
@@ -26,7 +19,6 @@ export function LongitudinalResultSVG({...props}: ILongitudinalResultsDisplay) {
         if (!state.results.isResultsAvailable) {
             const width = parseInt(svg.style('width'))
             const height = parseInt(svg.style('height'))
-
             const fontSize = width/20
 
             svg.append('text')
@@ -66,7 +58,6 @@ export function LongitudinalResultSVG({...props}: ILongitudinalResultsDisplay) {
         }
 
         if (resultValues != null) {
-
             const notPlottedValueIndexes = [1, 2, 3, 5, 6, 7,
                 lastIndex - 1, lastIndex - 2, lastIndex - 3, 
                 lastIndex - 5, lastIndex - 6,
@@ -74,27 +65,21 @@ export function LongitudinalResultSVG({...props}: ILongitudinalResultsDisplay) {
 
             let previousValue:number;
 
-
             const maxResult = Math.max(...resultValues)  > columnLength/5 ? Math.max(...resultValues) : columnLength/5;
             const minResult = Math.min(...resultValues)  < -columnLength/5 ? Math.min(...resultValues) : -columnLength/5;
             const absMax = Math.abs(maxResult) > Math.abs(minResult) ? Math.abs(maxResult) : Math.abs(minResult);
-
             const hMargin = 0.1
             const domainMargin = 1
             const vMargin = 0.15
-
             const viewBoxParams = {
                 x: absMax,
                 y: columnLength,
             }
-
             const width = parseInt(svg.style('width'))
             const height = parseInt(svg.style('height'))
-
             const xScale = scaleLinear()
                         .domain([-(1+domainMargin)*viewBoxParams.x, (1+domainMargin)*viewBoxParams.x])
                         .range([hMargin*width, (1-hMargin)*width])
-
             const yScale = scaleLinear()
                         .domain([columnLength, 0])
                         .range([vMargin*height, (1-vMargin)*height])
@@ -104,12 +89,9 @@ export function LongitudinalResultSVG({...props}: ILongitudinalResultsDisplay) {
                 .attr('transform', `translate (0, ${(1-vMargin)*height})`)
                 .call(axisBottom(xScale))
 
-            resultValues.map((value, index) => {
-
+            resultValues.forEach((value, index) => {
                 if (!notPlottedValueIndexes.includes(index)) {
-                    
                     const roundedValue = Math.round(value*1000)/1000
-
 
                     svg.select('#result-line')
                     .append('line')
@@ -120,7 +102,6 @@ export function LongitudinalResultSVG({...props}: ILongitudinalResultsDisplay) {
                     .style('stroke', 'green')
                     .style('stroke-width', '1px')
                     
-
                     if (index > 0) {
                         const previousIndex = resultValues.indexOf(previousValue);
 
@@ -134,8 +115,7 @@ export function LongitudinalResultSVG({...props}: ILongitudinalResultsDisplay) {
                             .style('stroke-width', '0.5px')
                     }
 
-                    if (value == Math.max(...resultValues) || value == Math.min(...resultValues)) {
-
+                    if (value === Math.max(...resultValues) || value === Math.min(...resultValues)) {
                         if(roundedValue < 0) {
                             svg.select('#title')
                             .append('text')
@@ -145,7 +125,6 @@ export function LongitudinalResultSVG({...props}: ILongitudinalResultsDisplay) {
                             .style('font-size', '0.8rem')
                             .style('font-weight', 700)
                             .text(`${roundedValue} ${unit}`)
-                            
                         } else if (roundedValue > 0) {
                             svg.select('#title')
                             .append('text')
@@ -156,9 +135,7 @@ export function LongitudinalResultSVG({...props}: ILongitudinalResultsDisplay) {
                             .style('font-weight', 700)
                             .text(`${roundedValue} ${unit}`)
                         }
-
                     }
-
                     previousValue = value;
                 } 
             })
@@ -172,7 +149,6 @@ export function LongitudinalResultSVG({...props}: ILongitudinalResultsDisplay) {
                 .style('stroke', '#000')
                 .style('stroke-width', '5px')
 
-
             svg.select('#title')
                 .append("text")
                 .attr("x", width/2)
@@ -182,10 +158,8 @@ export function LongitudinalResultSVG({...props}: ILongitudinalResultsDisplay) {
                 .text(`${title}`)
                 .style('font-weight', 700)
                 .style('font-family', 'Poppins')
-
-            
         }
-    }, [props])
+    }, [props, state.results])
 
     return (
         <>

@@ -7,7 +7,6 @@ import { IconContext } from 'react-icons'
 
 function Sidebar(){
     const [sidebar, setSidebar] = useState(false)
-
     const showSideBar = () => setSidebar(!sidebar)
 
     return (

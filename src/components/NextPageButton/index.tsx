@@ -4,7 +4,6 @@ import * as AiIcons from 'react-icons/ai'
 import { useNavigate } from 'react-router-dom';
 import { INavButton } from '../../interfaces/INavButton';
 
-
 function NextPageButton( props:INavButton ) {
     const { to } = props
     const navigate = useNavigate()

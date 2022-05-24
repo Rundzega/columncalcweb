@@ -4,7 +4,6 @@ import * as GiIcons from 'react-icons/gi'
 import * as BsIcons from 'react-icons/bs'
 import * as VscIcons from 'react-icons/vsc'
 
-
 export const SidebarData = [
     {
         title: 'Início',

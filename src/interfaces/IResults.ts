@@ -1,5 +1,4 @@
 export interface IResults {
-
     isResultsAvailable: boolean,
     uyDisplacements: number[] | null,
     uxDisplacements: number[] | null,

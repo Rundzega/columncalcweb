@@ -9,7 +9,6 @@ import Home from './pages/Home';
 import Materials from './pages/Materials';
 import Results from './pages/Results';
 
-
 function App() {
   return (
     <>

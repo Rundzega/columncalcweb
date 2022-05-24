@@ -5,7 +5,6 @@ import { IRebarList } from '../interfaces/IRebarList';
 import { IRectangleList } from '../interfaces/IRectangleList';
 import { IReducerContextType } from '../interfaces/IReducerContextProps';
 import { IReducerProviderProps } from '../interfaces/IReducerProviderProps';
-import Results from '../pages/Results';
 
 export const ColumnDataContext = createContext({} as IReducerContextType);
 
@@ -55,7 +54,6 @@ const initialState:IInputState = {
     forcesTolerance: 0.005,
     neutralAxisTolerance: 0.001,
     results: {
-
         isResultsAvailable: false,
         uyDisplacements: null,
         uxDisplacements: null,
@@ -89,9 +87,7 @@ const initialState:IInputState = {
         title: 'NdMAX - Envoltorias'
     },
     currentResultType: "longitudinal"
-    
 }
-
 
 function reducer(state:IInputState, action:IInputAction) {
     switch (action.type) {
@@ -102,7 +98,6 @@ function reducer(state:IInputState, action:IInputAction) {
         }
 
         case 'add-rectangle': {
-            
             const newRectangleList = [...state.rectangleList, {
                 index: state.elementCounter,
                 width: action.payload.width,
@@ -115,10 +110,8 @@ function reducer(state:IInputState, action:IInputAction) {
             return {
                 ...state, elementCounter: (state.elementCounter + 1), rectangleList: newRectangleList, results: {...state.results, isResultsAvailable: false }
             }
-            
         } 
         case 'add-rebar': {
-            
             const newRebarList = [...state.rebarList, {
                 index: state.elementCounter,
                 diameter: action.payload.diameter,
@@ -134,7 +127,6 @@ function reducer(state:IInputState, action:IInputAction) {
         }
 
         case 'remove-rectangle': {
-            
             if (state.selectedElement == null) {
                 return {
                     ...state
@@ -142,7 +134,7 @@ function reducer(state:IInputState, action:IInputAction) {
             }
 
             const isSelectedRectangle = state.rectangleList.filter((rectangle) => {
-                return (rectangle.index == state.selectedElement)
+                return (rectangle.index === state.selectedElement)
             })
 
             if (isSelectedRectangle.length <= 0) {
@@ -152,12 +144,11 @@ function reducer(state:IInputState, action:IInputAction) {
             }
 
             const rectanglesDeletedRow = state.rectangleList.filter((rectangle) => {
-                return (rectangle.index != state.selectedElement)
+                return (rectangle.index !== state.selectedElement)
             })
             const deletedRectangleList = state.rectangleList.filter((rectangle) => {
-                return (rectangle.index == state.selectedElement)
+                return (rectangle.index === state.selectedElement)
             })
-            
             const deletedRectangle = deletedRectangleList[0]
             const rectLeftVertices = deletedRectangle.xCenterCoordinate - deletedRectangle.width / 2;
             const rectRightVertices = deletedRectangle.xCenterCoordinate + deletedRectangle.width / 2;
@@ -166,7 +157,6 @@ function reducer(state:IInputState, action:IInputAction) {
             const rebarListCopy = [...state.rebarList]
 
             rebarListCopy.forEach((rebar) => {
-
                 const rebarLeftExtreme = rebar.xCenterCoordinate - rebar.diameter / 20;
                 const rebarRightExtreme = rebar.xCenterCoordinate + rebar.diameter / 20;
                 const rebarTopExtreme = rebar.yCenterCoordinate + rebar.diameter / 20;
@@ -182,24 +172,20 @@ function reducer(state:IInputState, action:IInputAction) {
             })
 
             const rebarListAfterDelete = rebarListCopy.filter((rebar) => {
-                return (rebar.isInsideRectangle == true)
+                return (rebar.isInsideRectangle === true)
             })
-
 
             return {
                 ...state, rebarList: rebarListAfterDelete, rectangleList: rectanglesDeletedRow, selectedElement: null, results: {...state.results, isResultsAvailable: false }
             }
-
         }
 
         case 'remove-rebar': {
-
             const rebarsDeletedRow = state.rebarList.filter((rebar) => {
-                return (rebar.index != state.selectedElement)
+                return (rebar.index !== state.selectedElement)
             })
-
             const isSelectedRebar = state.rebarList.filter((rebar) => {
-                return (rebar.index == state.selectedElement)
+                return (rebar.index === state.selectedElement)
             })
 
             if (isSelectedRebar.length <= 0) {
@@ -220,39 +206,34 @@ function reducer(state:IInputState, action:IInputAction) {
         }
 
         case 'select-element': {
-
             const rectId = state.rectangleList.filter((rectangle) => {
-                return rectangle.index == parseFloat(action.payload.element.id)
+                return rectangle.index === parseFloat(action.payload.element.id)
             })
-
             const rebarId = state.rebarList.filter((rebar) => {
-                return rebar.index == parseFloat(action.payload.element.id)
+                return rebar.index === parseFloat(action.payload.element.id)
             })
-
             let newSelectedElement:number | null;
             let newRectList:IRectangleList = [...state.rectangleList]
             let newRebarList:IRebarList = [...state.rebarList]
-
             newSelectedElement = rectId.length > rebarId.length ? rectId[0].index : rebarId[0].index
 
-            if (state.selectedElement == newSelectedElement) {
+            if (state.selectedElement === newSelectedElement) {
                 newSelectedElement = null
-                newRectList.map((rectangle) => {
+                newRectList.forEach((rectangle) => {
                     rectangle.isHighlighted = false
                 })
-                newRebarList.map((rebar) => {
+                newRebarList.forEach((rebar) => {
                     rebar.isHighlighted = false
                 })
             } else {
-                newRectList.map((rectangle) => {
-                    rectangle.isHighlighted = rectangle.index == newSelectedElement ? true : false
+                newRectList.forEach((rectangle) => {
+                    rectangle.isHighlighted = rectangle.index === newSelectedElement ? true : false
                 })
-                newRebarList.map((rebar) => {
-                    rebar.isHighlighted = rebar.index == newSelectedElement ? true : false
+                newRebarList.forEach((rebar) => {
+                    rebar.isHighlighted = rebar.index === newSelectedElement ? true : false
                 })
             }
             
-
             return {
                 ...state, rectangleList: newRectList, rebarList: newRebarList, selectedElement: newSelectedElement
             }
@@ -282,8 +263,6 @@ function reducer(state:IInputState, action:IInputAction) {
     }
 }
 export default function ColumnDataProvider( props: IReducerProviderProps ) {
-
-    
     const [state, dispatch] = useReducer(reducer, initialState)
 
     return (
