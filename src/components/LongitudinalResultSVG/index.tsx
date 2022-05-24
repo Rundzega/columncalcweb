@@ -79,9 +79,9 @@ export function LongitudinalResultSVG({...props}: ILongitudinalResultsDisplay) {
             const minResult = Math.min(...resultValues)  < -columnLength/5 ? Math.min(...resultValues) : -columnLength/5;
             const absMax = Math.abs(maxResult) > Math.abs(minResult) ? Math.abs(maxResult) : Math.abs(minResult);
 
-            const hMargin = 0.05
-            const domainMargin = 0.5
-            const vMargin = 0.05
+            const hMargin = 0.1
+            const domainMargin = 1
+            const vMargin = 0.15
 
             const viewBoxParams = {
                 x: absMax,
@@ -142,7 +142,7 @@ export function LongitudinalResultSVG({...props}: ILongitudinalResultsDisplay) {
                             .attr('x', xScale(roundedValue))
                             .attr('y', yScale(lengthPoints[index]))
                             .attr('text-anchor', 'end')
-                            .style('font-size', '12px')
+                            .style('font-size', '0.8rem')
                             .style('font-weight', 700)
                             .text(`${roundedValue} ${unit}`)
                             
@@ -152,7 +152,7 @@ export function LongitudinalResultSVG({...props}: ILongitudinalResultsDisplay) {
                             .attr('x', xScale(roundedValue))
                             .attr('y', yScale(lengthPoints[index]))
                             .attr('text-anchor', 'start')
-                            .style('font-size', '12px')
+                            .style('font-size', '0.8rem')
                             .style('font-weight', 700)
                             .text(`${roundedValue} ${unit}`)
                         }
@@ -190,7 +190,7 @@ export function LongitudinalResultSVG({...props}: ILongitudinalResultsDisplay) {
     return (
         <>
             <div className="flex border-brandPurple-300 rounded-2xl bg-white w-full justify-center text-center items-center mb-3 aspect-square" id="svg-d3-results">
-                <svg className='w-[90%] h-[90%]'ref={resultsSvg}></svg>
+                <svg className='w-full h-full'ref={resultsSvg}></svg>
             </div>
         </>)
 }

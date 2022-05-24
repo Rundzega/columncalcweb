@@ -117,19 +117,22 @@ export function TransversalResultSVG({...props}: ITransversalResultsDisplay) {
                 const xr = [beforeMx, afterMx]
                 const yr = [beforeMy, afterMy]
 
-                const [mr, nr] = fitLinearPolynomialFunction(beforeMx, afterMx, beforeMy, afterMy);
+                let [mr, nr] = fitLinearPolynomialFunction(beforeMx, afterMx, beforeMy, afterMy);
 
                 const xs = [0, mx]
                 const ys = [0, my]
                 const [ms, ns] = fitLinearPolynomialFunction(0, mx, 0, my);
 
+
                 const xIntersect = (ns - nr) / (mr - ms)
                 const yIntersect = ms * xIntersect + ns
+
 
                 const intersectDistance = Math.sqrt(Math.pow(xIntersect, 2) + Math.pow(yIntersect, 2))
                 const solicitingDistance = Math.sqrt(Math.pow(mx, 2) + Math.pow(my, 2)) 
                 
                 safetyFactor =  intersectDistance / solicitingDistance;
+                safetyFactor = isNaN(safetyFactor) ? 100 : safetyFactor 
             } else {
                 safetyFactor = 100;
             }
@@ -169,9 +172,9 @@ export function TransversalResultSVG({...props}: ITransversalResultsDisplay) {
             const width = parseInt(svg.style('width'))
             const height = parseInt(svg.style('height'))
 
-            const hMargin = 0.075
-            const domainMargin = 0.1
-            const vMargin = 0.075
+            const hMargin = 0.1
+            const domainMargin = 0.05
+            const vMargin = 0.1
             
             const xScale = scaleLinear()
                         .domain([-(1+domainMargin)*maxValue, (1+domainMargin)*maxValue])
@@ -224,7 +227,7 @@ export function TransversalResultSVG({...props}: ITransversalResultsDisplay) {
                 .attr("x", (1-hMargin) * width)
                 .attr("y", yScale(0))
                 .attr('text-anchor', 'start')
-                .style('font-size', '18px')
+                .style('font-size', '0.8rem')
                 .style('fill', '#9c32af')
                 .text('Mx')
                 .style('font-weigth', 700)
@@ -235,7 +238,7 @@ export function TransversalResultSVG({...props}: ITransversalResultsDisplay) {
                 .attr("x", xScale(0))
                 .attr("y", (1-vMargin) * height)
                 .attr('text-anchor', 'start')
-                .style('font-size', '18px')
+                .style('font-size', '0.8rem')
                 .style('fill', '#9c32af')
                 .text('My')
                 .style('font-weigth', 700)
@@ -247,7 +250,7 @@ export function TransversalResultSVG({...props}: ITransversalResultsDisplay) {
                 .attr("x", width/2)
                 .attr("y", vMargin/2*height)
                 .attr("text-anchor", "middle")
-                .style("font-size", "18px")
+                .style("font-size", "0.8rem")
                 .text(`FS:${safetyFactor.toFixed(2)} - Mx:${mx.toFixed(2)} kN.m - My:${my.toFixed(2)} kN.m`)
                 .style('fill', `${safetyFactor > 1? 'green' : 'red'}`)
                 .style('font-weight', 700)
@@ -260,7 +263,7 @@ export function TransversalResultSVG({...props}: ITransversalResultsDisplay) {
     return (
         <>
             <div className="flex border-brandPurple-300 rounded-2xl bg-white w-full justify-center text-center items-center mb-3 aspect-square" id="svg-d3-results">
-                <svg className='w-[90%] h-[90%]'ref={resultsSvg}></svg>
+                <svg className='w-full h-full'ref={resultsSvg}></svg>
             </div>
         </>)
 }
