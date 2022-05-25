@@ -7,7 +7,7 @@ export function RectangleTable() {
 
     return (
         <div className="w-full text-sm justify-between flex flex-col mt-4 md:w-[calc(100%/2-0.75rem)] md:mt-0">
-            <div className={state.rectangleList.length > 0 ? "border-brandGreen-300 border-[1px] h-full w-full mb-3 rounded-2xl overflow-hidden max-h-[252px] outline-none ring-0" : "md:border-brandGreen-300 border-[1px] h-full w-full mb-3 rounded-2xl overflow-hidden max-h-[252px] outline-none ring-0"  }>
+            <div className={state.rectangleList.length > 0 ? "border-brandGreen-300 border-[1px] h-full w-full mb-3 rounded-2xl overflow-hidden md:max-h-[252px] outline-none ring-0" : "md:border-brandGreen-300 border-[1px] h-full w-full mb-3 rounded-2xl overflow-hidden md:max-h-[252px] outline-none ring-0"  }>
                 <table className={state.rectangleList.length > 5 ? 'text-sm block justify-between w-full max-h-full text-center border-collapse rounded-2xl resize-none overflow-x-hidden overflow-y-scroll block scrollbar scrollbar-thumb-brandGreen-300 scrollbar-track-transparent scrollbar-thin' : 'text-sm block justify-between w-full max-h-full text-center border-collapse rounded-t-2xl overflow-x-hidden'}>
                     <thead>
                         <tr>

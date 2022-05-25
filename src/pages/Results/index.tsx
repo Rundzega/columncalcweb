@@ -9,7 +9,7 @@ function Results() {
     return(
         <>
             <div className="flex flex-col justify-center max-w-3xl items-center m-auto py-6 px-9 rounded-3xl">
-                <h2 className="text-brandPurple-300 text-2xl font-bold">Results</h2>
+                <h2 className="text-white text-2xl font-bold">Results</h2>
                 <ResultsSVG />
                 <div className="w-full mb-3">
                     <CalculateButton />

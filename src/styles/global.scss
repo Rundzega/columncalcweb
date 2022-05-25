@@ -31,6 +31,10 @@ input[type=number] {
     }
 }
 
+input[type=number] {
+    -moz-appearance:textfield;
+}
+
 
 .navigation-buttons {
     width: 100%;
@@ -38,10 +42,5 @@ input[type=number] {
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-    // column-gap: 25px;
-    // padding: 0 18px
 }
 
-// .nav-button {
-//     width: 100%;
-// }

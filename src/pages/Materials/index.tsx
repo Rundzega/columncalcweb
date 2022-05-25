@@ -12,14 +12,14 @@ function Materials() {
   return (
     <>
       <div className="flex flex-col justify-center max-w-3xl items-center m-auto py-6 px-9 rounded-3xl" >
-        <h2 className="text-brandPurple-300 text-2xl font-bold">Materiais</h2>
+        <h2 className="text-white text-2xl font-bold">Materiais</h2>
         <img src={concImg} alt="Imagem concreto" className="w-full rounded-2xl mb-3 mt-3 border-brandPurple-300"/>
         <ConcreteInput />
         <img src={steelImg} alt="Imagem aço" className="w-full rounded-2xl mb-3 mt-3 border-brandPurple-300" />
         <SteelInput />
         <footer className="w-full flex flex-row justify-between items-center">
           <div>
-            <PreviousPageButton to='geometry'  />
+            <PreviousPageButton to=''  />
           </div>
           <div>
             <NextPageButton to='cross-section'/>

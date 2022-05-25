@@ -1,19 +1,12 @@
 import React from 'react'
-import * as AiIcons from 'react-icons/ai'
 import * as GiIcons from 'react-icons/gi'
 import * as BsIcons from 'react-icons/bs'
 import * as VscIcons from 'react-icons/vsc'
 
 export const SidebarData = [
     {
-        title: 'Início',
-        path: '/',
-        icon: <AiIcons.AiOutlineHome />,
-        cName: 'nav-text'
-    },
-    {
         title: 'Geometria e Cargas',
-        path: '/geometry',
+        path: '/',
         icon: <GiIcons.GiPisaTower />,
         cName: 'nav-text'
     },
@@ -40,5 +33,11 @@ export const SidebarData = [
         path: '/results',
         icon: <VscIcons.VscGraphLine />,
         cName: ''
+    },
+    {
+        title: 'Sobre',
+        path: '/about',
+        icon: <BsIcons.BsInfoCircle />,
+        cName: 'nav-text'
     },
 ]
