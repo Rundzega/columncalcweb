@@ -1,3 +1,3 @@
 import axios from 'axios'
 
-export const Api = axios.create({ baseURL: 'http://ec2-34-207-144-68.compute-1.amazonaws.com:8080' })
+export const Api = axios.create({ baseURL: 'http://52.23.172.186:8080' })
