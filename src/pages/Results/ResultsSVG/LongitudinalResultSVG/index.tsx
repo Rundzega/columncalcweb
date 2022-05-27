@@ -28,7 +28,7 @@ export function LongitudinalResultSVG({...props}: ILongitudinalResultsDisplay) {
                 .attr('text-anchor', 'middle')
                 .style('font-weigth', 700 )
                 .style('font-size', `${fontSize}` )
-                .style('fill', 'red' )
+                .style('fill', '#8E3A9D' )
             return
         }
 
@@ -152,7 +152,7 @@ export function LongitudinalResultSVG({...props}: ILongitudinalResultsDisplay) {
             svg.select('#title')
                 .append("text")
                 .attr("x", width/2)
-                .attr("y", vMargin/2*height)
+                .attr("y", vMargin/1.5*height)
                 .attr("text-anchor", "middle")
                 .style("font-size", "16px")
                 .text(`${title}`)
@@ -163,7 +163,7 @@ export function LongitudinalResultSVG({...props}: ILongitudinalResultsDisplay) {
 
     return (
         <>
-            <div className="flex border-brandPurple-300 rounded-2xl bg-white w-full justify-center text-center items-center mb-3 aspect-square" id="svg-d3-results">
+            <div className="flex border-brandPurple-300 border-2 rounded-2xl bg-white w-full justify-center text-center items-center aspect-square md:aspect-video mt-2" id="svg-d3-results">
                 <svg className='w-full h-full'ref={resultsSvg}></svg>
             </div>
         </>)

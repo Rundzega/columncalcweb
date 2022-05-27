@@ -92,10 +92,10 @@ const handleCheckRectOverlap = (newRectangle:INewRect, rectangleList:IRectangleL
     if (adjescent && !overlap) {
         return false
     } else if (overlap) {
-        errorMsg('Retângulos sobrepostos')
+        errorMsg("Erro de entrada de dados", "Retângulos sobrepostos")
         return true
     } else {
-        errorMsg('Seção de concreto deve ser contínua')
+        errorMsg("Erro de entrada de dados", "Seção de concreto deve ser contínua")
         return true
     }
     

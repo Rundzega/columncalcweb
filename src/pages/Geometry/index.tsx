@@ -5,15 +5,18 @@ import PreviousPageButton from "../../components/PreviousPageButton";
 import { RestrictionsInput } from "./RestrictionsInput";
 import { LoadsInput } from "./LoadsInput";
 import { LengthInput } from "./LengthInput";
+import column from "../../assets/images/columnImg.svg"
 
-const columnImg = require("../../assets/images/columnImg.png");
+// 
 
 function Geometry() {
   return (
     <>
-      <div className="flex flex-col justify-center max-w-3xl items-center m-auto py-6 px-9 rounded-3xl" >
+      <div className="flex flex-col justify-center max-w-md 2xl:max-w-xl items-center m-auto py-6 px-9 rounded-3xl" >
         <h2 className="text-white text-2xl font-bold">Geometria e Cargas</h2>
-        <img className="w-full rounded-2xl mb-3 mt-3 border-brandPurple-300" src={columnImg} alt="Imagem do pilar" />
+        <div className="bg-[#82af7a] sticky top-20 z-30 rounded-b-2xl">
+          <img className="w-full h-[90%] rounded-2xl border-brandPurple-300 border-2 mt-2" src={column} alt="Imagem do pilar" />
+        </div>
         <LengthInput/>
         <RestrictionsInput />
         <LoadsInput />

@@ -5,7 +5,7 @@ export function LengthInput() {
     const { state, dispatch } = useColumnDataContext()
 
     return (
-        <div className="border-brandPurple-300 w-full p-5 my-3 rounded-2xl bg-white">
+        <div className="border-brandPurple-300 border-2 w-full p-5 mb-3 mt-6 rounded-2xl bg-white">
           <div className="w-full">
             <div className="text-2xl font-bold relative mb-2 text-brandGreen-300 before:absolute before:bottom-0 before:h-1 before:w-10 before:bg-brandPurple-300 z-10">Dados de entrada</div>
           </div>
@@ -26,6 +26,10 @@ export function LengthInput() {
                 }
               }}
               min="0"
+              onWheel={(e) => {
+                e.currentTarget.blur()
+              }}
+              inputMode="numeric"
               className="w-full bg-white rounded-2xl border-brandGreen-300 text-brandGreen-300 text-sm duration-200 disabled:bg-[#CFCFCF] py-1 mb-2 focus:border-brandPurple-300 focus:ring-offset-brandPurple-300 focus:ring-1 focus:outline-none resize-none" 
             />
           </div>

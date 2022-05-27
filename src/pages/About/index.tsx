@@ -4,15 +4,15 @@ import PreviousPageButton from '../../components/PreviousPageButton'
 
 function About() {
     return(
-        <div className="flex flex-col justify-center max-w-3xl items-center m-auto py-6 px-9 rounded-3xl" >
+        <div className="flex flex-col justify-center max-w-md 2xl:max-w-xl items-center m-auto py-6 px-9 rounded-3xl" >
             <h2 className="text-white text-2xl font-bold">Sobre</h2>
-            <div className="border-brandPurple-300 w-full p-5 my-3 rounded-2xl bg-white">
+            <div className="border-brandPurple-300 border-2 w-full p-5 my-3 rounded-2xl bg-white">
                 <p>
                     Autor: Rafael Bays Weiler <br />
 
-                    <br />Este projeto foi desenvolvido em parceria com a MDC Projetos e em conjunto com um trabalho de conclusão de curso para a obtenção do título de Engenheiro Civil pela Universidade do Vale do Rio dos Sinos - UNISINOS<br />
+                    <br />Este projeto foi desenvolvido em parceria com a MDC Projetos e em conjunto com um trabalho de conclusão de curso para a obtenção do título de Engenheiro Civil pela Universidade do Vale do Rio dos Sinos - UNISINOS.<br />
 
-                    <br />O site verifica a estabilidade de pilares de concreto armado submetidos à flexo-compressão oblíqua<br />
+                    <br />O site verifica a estabilidade de pilares de concreto armado submetidos à flexo-compressão oblíqua.<br />
 
                     <br />Principais bibliografias utilizadas na elaboração do projeto: <br />
 

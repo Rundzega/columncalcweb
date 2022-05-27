@@ -48,10 +48,10 @@ const handleCheckInsideRect  = (newRebar:INewRebar, RebarList:IRebarList, rectan
     if (isInsideRectangle && !overlap) {
         return true
     } else if (!isInsideRectangle) {
-        errorMsg('Barra de aço deve estar dentro da seção')
+        errorMsg("Erro de entrada de dados", "Barra de aço deve estar dentro da seção")
         return false
     } else {
-        errorMsg('Barras de aço não podem estar sobrepostas')
+        errorMsg("Erro de entrada de dados", "Barras de aço não podem estar sobrepostas")
         return false
     }
 }

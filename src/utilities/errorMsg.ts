@@ -1,11 +1,11 @@
 import React from 'react'
 import Swal from 'sweetalert2'
 
-const errorMsg = (errorMessage?: string) => {
+const errorMsg = (errorTitle="Erro de entrada de dados", errorMessage="") => {
     return (
         Swal.fire({
-            title: 'Erro de entrada de dados',
-            text: errorMessage ? errorMessage : '',
+            title: errorTitle,
+            text: errorMessage,
             icon: 'error',
             confirmButtonText: 'Ok'
           })

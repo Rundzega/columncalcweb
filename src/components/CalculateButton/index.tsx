@@ -17,7 +17,7 @@ function CalculateButton( props:CalculateButtonPRops ) {
 
     return(
         <button 
-            className='w-full mt-3 appearance-none bg-brandPurple-300 rounded-[66px] text-white cursor-pointer text-xl font-semibold py-3 px-6 relative text-center flex justify-center duration-200 hover:bg-brandPurple-400 focus:outline-none disabled:opacity-50 disabled:text-opacity-50 disabled:cursor-default'
+            className='w-full mt-6 appearance-none bg-brandPurple-300 rounded-[66px] text-white cursor-pointer text-xl font-semibold py-3 px-6 relative text-center flex justify-center duration-200 hover:bg-brandPurple-400 focus:outline-none disabled:opacity-50 disabled:text-opacity-50 disabled:cursor-default'
             onClick={async () => {
                 setIsCalculating(true)
                 await ResultsService.ColumnResultsService(columnData)
@@ -27,7 +27,7 @@ function CalculateButton( props:CalculateButtonPRops ) {
                         sucessMsg(); 
                     })
                     .catch((err:AxiosError<IResponse>) => {
-                        errorMsg(err.response?.data.message)
+                        errorMsg("A verificação falhou",  err.response?.data.message)
                     })
                     setIsCalculating(false)
                 }

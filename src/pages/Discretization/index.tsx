@@ -7,7 +7,7 @@ import { DiscretizationInput } from './DiscretizationInput';
 function Discretization() {
 
     return(
-        <div className="flex flex-col justify-center max-w-3xl items-center m-auto py-6 px-9 rounded-3xl">
+        <div className="flex flex-col justify-center max-w-xl items-center m-auto py-6 px-9 rounded-3xl">
             <h2 className="text-white text-2xl font-bold">Discretização</h2>
             <DiscretizationInput />
             <footer className="w-full flex flex-row justify-between items-center">

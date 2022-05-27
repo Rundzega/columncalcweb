@@ -54,7 +54,7 @@ export function DiscretizationInput() {
     }
 
     return(
-        <div className="border-brandPurple-300 w-full p-5 my-3 rounded-2xl bg-white">
+        <div className="border-brandPurple-300 border-2 w-full p-5 my-3 rounded-2xl bg-white">
             <div className="text-2xl font-bold relative mb-2 text-brandGreen-300 before:absolute before:bottom-0 before:h-1 before:w-10 before:bg-brandPurple-300 z-10">Critérios</div>
             <form className="flex flex-col justify-between p-2" action="#">
                 
@@ -70,7 +70,7 @@ export function DiscretizationInput() {
                     onBlur={(e) => {
                     const minValue = stateProp.stringName === 'diagramPoints' ? 45 : 0
                     
-                    if(handleValidateMinimum(e, minValue, (`${field} deve ser um número mario do que ${minValue}`))) {
+                    if(handleValidateMinimum(e, minValue, (`${field} deve ser um número maior do que ${minValue}`))) {
                         
                         e.target.setAttribute('class', "w-full bg-white rounded-2xl border-brandGreen-300 text-brandGreen-300 text-sm duration-200 disabled:bg-[#CFCFCF] py-1 mb-2 focus:border-brandPurple-300 focus:ring-offset-brandPurple-300 focus:ring-1 focus:outline-none resize-none" )
                         dispatch({type: 'field', fieldName:stateProp.stringName, payload: parseFloat(e.currentTarget.value)})
@@ -79,6 +79,9 @@ export function DiscretizationInput() {
                     }
                     }}
                     min = "0" 
+                    onWheel={(e) => {
+                        e.currentTarget.blur()
+                      }}
                     className="w-full bg-white rounded-2xl border-brandGreen-300 text-brandGreen-300 text-sm duration-200 disabled:bg-[#CFCFCF] py-1 mb-2 focus:border-brandPurple-300 focus:ring-offset-brandPurple-300 focus:ring-1 focus:outline-none resize-none" 
                     />
                 </div>

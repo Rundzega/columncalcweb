@@ -29,7 +29,7 @@ export function TransversalResultSVG({...props}: ITransversalResultsDisplay) {
                 .attr('text-anchor', 'middle')
                 .style('font-weigth', 700 )
                 .style('font-size', `${fontSize}` )
-                .style('fill', 'red' )
+                .style('fill', '#8E3A9D' )
             return
         }
 
@@ -132,13 +132,13 @@ export function TransversalResultSVG({...props}: ITransversalResultsDisplay) {
             const width = parseInt(svg.style('width'))
             const height = parseInt(svg.style('height'))
             const hMargin = 0.1
-            const domainMargin = 0.05
+            const domainMargin = 0.2
             const vMargin = 0.1
             const xScale = scaleLinear()
-                        .domain([-(1+domainMargin)*maxValue, (1+domainMargin)*maxValue])
+                        .domain([-(1+domainMargin)*absMaxMx, (1+domainMargin)*absMaxMx])
                         .range([hMargin*width, (1-hMargin)*width])
             const yScale = scaleLinear()
-                        .domain([(1+domainMargin)*maxValue, -(1+domainMargin)*maxValue])
+                        .domain([(1+domainMargin)*absMaxMy, -(1+domainMargin)*absMaxMy])
                         .range([vMargin*height, (1-vMargin)*height])
             let previousPoint:number[];
 
@@ -168,12 +168,18 @@ export function TransversalResultSVG({...props}: ITransversalResultsDisplay) {
             svg.select('#axis')
                 .append('g')
                 .attr('transform', `translate (0, ${height/2})`)
-                .call(axisBottom(xScale))
+                .call(axisBottom(xScale).ticks(10).tickFormat((interval,i) => {
+                    return i%2 !== 0 ? " ": interval.toString();
+                   }))
+                
 
             svg.select('#axis')
                 .append('g')
                 .attr('transform', `translate (${width/2}, 0)`)
-                .call(axisLeft(yScale))
+                .call(axisLeft(yScale).ticks(10).tickFormat((interval,i) => {
+                    return i%2 !== 0 ? " ": interval.toString();
+                   }))
+                
 
             svg.select('#axis')
                 .append('text')
@@ -189,7 +195,7 @@ export function TransversalResultSVG({...props}: ITransversalResultsDisplay) {
             svg.select('#axis')
                 .append('text')
                 .attr("x", xScale(0))
-                .attr("y", (1-vMargin) * height)
+                .attr("y", (1-vMargin/3) * height)
                 .attr('text-anchor', 'start')
                 .style('font-size', '0.8rem')
                 .style('fill', '#9c32af')
@@ -200,7 +206,7 @@ export function TransversalResultSVG({...props}: ITransversalResultsDisplay) {
             svg.select('#title')
                 .append("text")
                 .attr("x", width/2)
-                .attr("y", vMargin/2*height)
+                .attr("y", vMargin/1.5*height)
                 .attr("text-anchor", "middle")
                 .style("font-size", "0.8rem")
                 .text(`FS:${safetyFactor.toFixed(2)} - Mx:${mx.toFixed(2)} kN.m - My:${my.toFixed(2)} kN.m`)
@@ -212,7 +218,7 @@ export function TransversalResultSVG({...props}: ITransversalResultsDisplay) {
 
     return (
         <>
-            <div className="flex border-brandPurple-300 rounded-2xl bg-white w-full justify-center text-center items-center mb-3 aspect-square" id="svg-d3-results">
+            <div className="flex border-brandPurple-300 border-2 rounded-2xl bg-white w-full justify-center text-center items-center aspect-square md:aspect-video mt-2" id="svg-d3-results">
                 <svg className='w-full h-full'ref={resultsSvg}></svg>
             </div>
         </>)

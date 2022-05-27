@@ -9,7 +9,7 @@ import { RebarInput } from './RebarInput';
 function CrossSection() {
     return (
         <>
-            <div className="flex flex-col justify-center max-w-3xl items-center m-auto py-6 px-9 rounded-3xl">
+            <div className="flex flex-col justify-center max-w-md 2xl:max-w-xl items-center m-auto py-6 px-9 rounded-3xl">
                 <h2 className="text-white text-2xl font-bold">Seção Transversal</h2>
                 <CrossSectionSVG />
                 <RectangleInput />

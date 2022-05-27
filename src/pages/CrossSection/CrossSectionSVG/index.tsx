@@ -133,7 +133,7 @@ export function CrossSectionSVG () {
                         .domain([-viewBoxParams.y, (-viewBoxParams.y - viewBoxParams.heigth)])
                         .range([viewBoxParams.y, (viewBoxParams.y + viewBoxParams.heigth)])
 
-            const fontScale = viewBoxParams.width * 0.025
+            const fontScale = viewBoxParams.width * 0.04
             const tickScale = viewBoxParams.width * 0.025
                         
             svg.select('#axis')
@@ -154,8 +154,10 @@ export function CrossSectionSVG () {
     }, [state.rectangleList, state.rebarList, dispatch])
 
     return (
-        <div className="flex border-brandPurple-300 rounded-2xl bg-white w-full justify-center text-center items-center mb-3 aspect-square" id="svg-d3">
-            <svg className='w-[90%] h-[90%]' ref={crossSectionSvg}></svg>
+        <div className="bg-[#82af7a] p-0 m-0 w-full sticky top-20 z-30 rounded-b-2xl">
+            <div className="flex border-brandPurple-300 border-2 rounded-2xl bg-white w-full h-full justify-center text-center items-center aspect-square md:aspect-video mt-2" id="svg-d3">
+                <svg className='w-[90%] h-[90%]' ref={crossSectionSvg}></svg>
+            </div>
         </div>
     )
 }

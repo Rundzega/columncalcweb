@@ -9,10 +9,10 @@ const handleValidateMinimum = (e: React.ChangeEvent<HTMLInputElement>, minimumVa
 
     if (value < minimumValue) {
   
-        errorMsg(message);
+        errorMsg("Erro de entrada de dados", message);
         return false;
     } else if (e.target.value == '') {
-        errorMsg(message);
+        errorMsg("Erro de entrada de dados", message);
         return false;
     }
     

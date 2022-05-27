@@ -10,7 +10,7 @@ const handleValidateNumber = (e: React.ChangeEvent<HTMLInputElement>, message?:s
 
         if (e.target.value == '') {
             e.preventDefault();
-            errorMsg(message);
+            errorMsg("Erro de entrada de dados", message);
             e.target.setAttribute('class', 'invalid')
             return false;
         }
@@ -18,7 +18,7 @@ const handleValidateNumber = (e: React.ChangeEvent<HTMLInputElement>, message?:s
         return true;
     } catch(err) {
         e.preventDefault();
-        errorMsg(message);
+        errorMsg("Erro de entrada de dados", message);
         e.target.setAttribute('class', 'invalid')
         return false;
     }
