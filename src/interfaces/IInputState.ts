@@ -39,7 +39,10 @@ export interface IInputState  {
     elementCounter: number,
     rectangleList: IRectangleList,
     rebarList: IRebarList,
-    selectedElement: number | null,
+    selectedElement: {
+        index: number | null,
+        type: 'rectangle' | 'rebar' | null
+    },
     finiteElements: number,
     xDiscretizations: number,
     yDiscretizations: number,

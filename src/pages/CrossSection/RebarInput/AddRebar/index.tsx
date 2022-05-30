@@ -18,7 +18,7 @@ export function AddRebar() {
             <form className='flex flex-wrap justify-between' action="#" id='add-rect'>
                 <div className="py-1 flex flex-col w-full justify-between pb-2">
                     <span className='ml-2 text-sm text-brandGreen-300'>Diâmetro (mm)</span>
-                    <select className='cursor-pointer bg-white text-brandGreen-300 px-3 text-sm rounded-2xl border-brandGreen-300 py-1 focus:outline-none focus:border-brandPurple-300 focus:ring-0'
+                    <select className='cursor-pointer bg-white text-brandGreen-300 px-3 text-sm rounded-2xl border-brandGreen-300 py-1 focus:outline-none focus:border-brandPurple-300 focus:ring-1 focus:ring-brandPurple-300 '
                         name="diameter"
                         required 
                         onChange={(e) => {
@@ -46,15 +46,15 @@ export function AddRebar() {
                         onBlur={(e) => {
                             if(handleValidateNumber(e, 'A coordenada X do CG deve ser um número')) {
 
-                                e.target.setAttribute('class', "w-full bg-white rounded-2xl border-brandGreen-300 text-brandGreen-300 text-sm duration-200 disabled:bg-[#CFCFCF] py-1 mb-2 focus:border-brandPurple-300 focus:ring-offset-brandPurple-300 focus:ring-1 focus:outline-none resize-none" )
+                                e.target.setAttribute('class', "w-full bg-white rounded-2xl border-brandGreen-300 text-brandGreen-300 text-sm duration-200 disabled:bg-[#CFCFCF] py-1 mb-2 focus:border-brandPurple-300 focus:ring-offset-brandPurple-300 focus:ring-1 focus:ring-brandPurple-300 focus:outline-none resize-none" )
                                 setRebarProps({...rebarProps, xCoord:parseFloat(e.target.value)})
                                 return
                             } else {
-                                e.target.setAttribute('class', "w-full bg-white rounded-2xl border-red-500 text-red-500 text-sm duration-200 disabled:bg-[#CFCFCF] py-1 mb-2 focus:border-brandPurple-300 focus:ring-offset-brandPurple-300 focus:ring-1 focus:outline-none resize-none ")
+                                e.target.setAttribute('class', "w-full bg-white rounded-2xl border-red-500 text-red-500 text-sm duration-200 disabled:bg-[#CFCFCF] py-1 mb-2 focus:border-brandPurple-300 focus:ring-offset-brandPurple-300 focus:ring-1 focus:ring-brandPurple-300 focus:outline-none resize-none ")
                             }
                             e.target.value = String(rebarProps.xCoord);
                         }}
-                        className="w-full bg-white rounded-2xl border-brandGreen-300 text-brandGreen-300 text-sm duration-200 disabled:bg-[#CFCFCF] py-1 mb-2 focus:border-brandPurple-300 focus:ring-offset-brandPurple-300 focus:ring-1 focus:outline-none resize-none" />
+                        className="w-full bg-white rounded-2xl border-brandGreen-300 text-brandGreen-300 text-sm duration-200 disabled:bg-[#CFCFCF] py-1 mb-2 focus:border-brandPurple-300 focus:ring-offset-brandPurple-300 focus:ring-1 focus:ring-brandPurple-300 focus:outline-none resize-none" />
                 </div>
                 <div className="py-1 w-full md:w-[calc(100%/2-1.25rem)] 2xl:w-full flex flex-col">
                     <span className='ml-2 text-sm text-brandGreen-300'>Coord. Y CG (cm)</span>
@@ -65,15 +65,15 @@ export function AddRebar() {
                         onBlur={(e) => {
                             if(handleValidateNumber(e, 'A coordenada Y do CG deve ser um número')) {
 
-                                e.target.setAttribute('class', "w-full bg-white rounded-2xl border-brandGreen-300 text-brandGreen-300 text-sm duration-200 disabled:bg-[#CFCFCF] py-1 mb-2 focus:border-brandPurple-300 focus:ring-offset-brandPurple-300 focus:ring-1 focus:outline-none resize-none" )
+                                e.target.setAttribute('class', "w-full bg-white rounded-2xl border-brandGreen-300 text-brandGreen-300 text-sm duration-200 disabled:bg-[#CFCFCF] py-1 mb-2 focus:border-brandPurple-300 focus:ring-offset-brandPurple-300 focus:ring-1 focus:ring-brandPurple-300 focus:outline-none resize-none" )
                                 setRebarProps({...rebarProps, yCoord:parseFloat(e.target.value)})
                                 return
                             } else {
-                                e.target.setAttribute('class', "w-full bg-white rounded-2xl border-red-500 text-red-500 text-sm duration-200 disabled:bg-[#CFCFCF] py-1 mb-2 focus:border-brandPurple-300 focus:ring-offset-brandPurple-300 focus:ring-1 focus:outline-none resize-none ")
+                                e.target.setAttribute('class', "w-full bg-white rounded-2xl border-red-500 text-red-500 text-sm duration-200 disabled:bg-[#CFCFCF] py-1 mb-2 focus:border-brandPurple-300 focus:ring-offset-brandPurple-300 focus:ring-1 focus:ring-brandPurple-300 focus:outline-none resize-none ")
                             }
                             e.target.value = String(rebarProps.yCoord);
                         }}
-                        className="w-full bg-white rounded-2xl border-brandGreen-300 text-brandGreen-300 text-sm duration-200 disabled:bg-[#CFCFCF] py-1 mb-2 focus:border-brandPurple-300 focus:ring-offset-brandPurple-300 focus:ring-1 focus:outline-none resize-none" />
+                        className="w-full bg-white rounded-2xl border-brandGreen-300 text-brandGreen-300 text-sm duration-200 disabled:bg-[#CFCFCF] py-1 mb-2 focus:border-brandPurple-300 focus:ring-offset-brandPurple-300 focus:ring-1 focus:ring-brandPurple-300 focus:outline-none resize-none" />
                 </div>
             </form>
             <div>

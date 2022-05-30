@@ -42,6 +42,7 @@ export function RectangleTable() {
                     onClick={() => {
                         dispatch({type:'remove-rectangle'})
                     }}
+                    disabled = {state.selectedElement.type !== 'rectangle'}
                 />
             </div>
         </div>

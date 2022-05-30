@@ -43,13 +43,16 @@ const initialState:IInputState = {
     elementCounter: 0,
     rectangleList: [],
     rebarList: [],
-    selectedElement: null,
+    selectedElement: {
+        index: null,
+        type: null
+    },
     finiteElements: 20,
-    xDiscretizations: 20,
-    yDiscretizations: 20,
+    xDiscretizations: 25,
+    yDiscretizations: 25,
     diagramPoints: 45,
     loadIncrements: 5,
-    maxIterationsPerIncrement: 100,
+    maxIterationsPerIncrement: 1000,
     displacementTolerance: 0.005,
     forcesTolerance: 0.005,
     neutralAxisTolerance: 0.001,
@@ -134,7 +137,7 @@ function reducer(state:IInputState, action:IInputAction) {
             }
 
             const isSelectedRectangle = state.rectangleList.filter((rectangle) => {
-                return (rectangle.index === state.selectedElement)
+                return (rectangle.index === state.selectedElement.index)
             })
 
             if (isSelectedRectangle.length <= 0) {
@@ -144,10 +147,10 @@ function reducer(state:IInputState, action:IInputAction) {
             }
 
             const rectanglesDeletedRow = state.rectangleList.filter((rectangle) => {
-                return (rectangle.index !== state.selectedElement)
+                return (rectangle.index !== state.selectedElement.index)
             })
             const deletedRectangleList = state.rectangleList.filter((rectangle) => {
-                return (rectangle.index === state.selectedElement)
+                return (rectangle.index === state.selectedElement.index)
             })
             const deletedRectangle = deletedRectangleList[0]
             const rectLeftVertices = deletedRectangle.xCenterCoordinate - deletedRectangle.width / 2;
@@ -176,16 +179,16 @@ function reducer(state:IInputState, action:IInputAction) {
             })
 
             return {
-                ...state, rebarList: rebarListAfterDelete, rectangleList: rectanglesDeletedRow, selectedElement: null, results: {...state.results, isResultsAvailable: false }
+                ...state, rebarList: rebarListAfterDelete, rectangleList: rectanglesDeletedRow, selectedElement: {index: null, type: null}, results: {...state.results, isResultsAvailable: false }
             }
         }
 
         case 'remove-rebar': {
             const rebarsDeletedRow = state.rebarList.filter((rebar) => {
-                return (rebar.index !== state.selectedElement)
+                return (rebar.index !== state.selectedElement.index)
             })
             const isSelectedRebar = state.rebarList.filter((rebar) => {
-                return (rebar.index === state.selectedElement)
+                return (rebar.index === state.selectedElement.index)
             })
 
             if (isSelectedRebar.length <= 0) {
@@ -195,7 +198,7 @@ function reducer(state:IInputState, action:IInputAction) {
             }
 
             return {
-                ...state, rebarList: rebarsDeletedRow, selectedElement: null, results: {...state.results, isResultsAvailable: false }
+                ...state, rebarList: rebarsDeletedRow, selectedElement: {index: null, type: null}, results: {...state.results, isResultsAvailable: false }
             }
         }        
         
@@ -212,13 +215,16 @@ function reducer(state:IInputState, action:IInputAction) {
             const rebarId = state.rebarList.filter((rebar) => {
                 return rebar.index === parseFloat(action.payload.element.id)
             })
-            let newSelectedElement:number | null;
+            let newSelectedElementIndex:number | null;
+            let newSelectedElementType:'rectangle' | 'rebar' | null;
             let newRectList:IRectangleList = [...state.rectangleList]
             let newRebarList:IRebarList = [...state.rebarList]
-            newSelectedElement = rectId.length > rebarId.length ? rectId[0].index : rebarId[0].index
+            newSelectedElementIndex = rectId.length > rebarId.length ? rectId[0].index : rebarId[0].index
+            newSelectedElementType = rectId.length > rebarId.length ? 'rectangle' : 'rebar'
 
-            if (state.selectedElement === newSelectedElement) {
-                newSelectedElement = null
+            if (state.selectedElement.index === newSelectedElementIndex) {
+                newSelectedElementIndex = null
+                newSelectedElementType = null
                 newRectList.forEach((rectangle) => {
                     rectangle.isHighlighted = false
                 })
@@ -227,15 +233,15 @@ function reducer(state:IInputState, action:IInputAction) {
                 })
             } else {
                 newRectList.forEach((rectangle) => {
-                    rectangle.isHighlighted = rectangle.index === newSelectedElement ? true : false
+                    rectangle.isHighlighted = rectangle.index === newSelectedElementIndex ? true : false
                 })
                 newRebarList.forEach((rebar) => {
-                    rebar.isHighlighted = rebar.index === newSelectedElement ? true : false
+                    rebar.isHighlighted = rebar.index === newSelectedElementIndex ? true : false
                 })
             }
             
             return {
-                ...state, rectangleList: newRectList, rebarList: newRebarList, selectedElement: newSelectedElement
+                ...state, rectangleList: newRectList, rebarList: newRebarList, selectedElement: {index: newSelectedElementIndex, type: newSelectedElementType}
             }
         }
 

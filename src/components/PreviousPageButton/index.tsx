@@ -12,7 +12,7 @@ function PreviousPageButton( props:INavButton ) {
         <IconContext.Provider value={{color: '#8E3A9D'}} >
             <button 
                 {...props}
-                className='mt-3 appearance-none bg-white rounded-[66px] border-brandPurple-300 text-brandPurple-300 inline-block text-2xl font-bold px-6 py-3 relative hover:bg-[#DCDAD1] focus:ring-1 disabled:bg-[#DCDAD1] disabled:opacity-50 disabled:text-[#cfcfcf] disabled:cursor-default'
+                className='mt-3 appearance-none bg-white rounded-[66px] border-brandPurple-300 text-brandPurple-300 inline-block text-2xl font-bold px-6 py-3 relative hover:bg-[#DCDAD1] focus:outline-none focus:ring-2 focus:ring-brandPurple-300 disabled:bg-[#DCDAD1] disabled:opacity-50 disabled:text-[#cfcfcf] disabled:cursor-default duration-200'
                 onClick={() => {
                     navigate(`/${to}`)
                 }}

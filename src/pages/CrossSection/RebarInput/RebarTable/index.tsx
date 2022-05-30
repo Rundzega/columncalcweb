@@ -40,6 +40,7 @@ export function RebarTable() {
                 onClick={() => {
                     dispatch({type: 'remove-rebar'})
                 }}
+                disabled = {state.selectedElement.type !== 'rebar'}
             />
         </div>
     </div>

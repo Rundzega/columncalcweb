@@ -95,7 +95,7 @@ export function RestrictionsInput() {
                     dispatch({type: 'field', fieldName:stateProp.stringName, payload: e.target.checked})}
                   }
                   disabled = {stateProp.isEnabled ? false : true}
-                  className="border-brandGreen-300  text-brandGreen-300 ring-transparent outline-none rounded-md focus:outline-none focus:ring-transparent disabled:text-[#cfcfcf]" 
+                  className="border-brandGreen-300  text-brandGreen-300 ring-transparent outline-none rounded-md focus:outline-none focus:ring-2 focus:ring-offset-0 focus:ring-brandPurple-300 disabled:text-[#cfcfcf]" 
                   />
                   <span className="ml-1 text-brandGreen-300">{field}</span>
                 </div>
@@ -119,7 +119,7 @@ export function RestrictionsInput() {
                       dispatch({type: 'field', fieldName:stateProp.stringName, payload: e.target.checked})}
                     }
                     disabled = {stateProp.isEnabled ? false : true}
-                    className="border-brandGreen-300 text-brandGreen-300 ring-transparent outline-none rounded-md focus:outline-none focus:ring-transparent disabled:text-[#cfcfcf]" 
+                    className="border-brandGreen-300 text-brandGreen-300 ring-transparent outline-none rounded-md focus:outline-none focus:ring-2 focus:ring-offset-0 focus:ring-brandPurple-300 disabled:text-[#cfcfcf]" 
                     />
                     <span className="ml-1 text-brandGreen-300">{field}</span>
                   </div>

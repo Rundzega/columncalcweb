@@ -12,7 +12,7 @@ function NextPageButton( props:INavButton ) {
         <IconContext.Provider value={{color: '#ffffff'}}>
             <button 
                 {...props}
-                className='mt-3 appearance-none bg-brandPurple-300 rounded-[66px] text-white inline-block text-2xl font-bold px-6 py-3 relative hover:bg-brandPurple-400 focus:ring-1 disabled:bg-brandPurple-400 disabled:opacity-50 disabled:text-[#cfcfcf] disabled:cursor-default'
+                className='mt-3 appearance-none bg-brandPurple-300 rounded-[66px] text-white inline-block text-2xl font-bold px-6 py-3 relative hover:bg-brandPurple-400 focus:outline-none focus:ring-2 focus:ring-white disabled:bg-brandPurple-400 disabled:opacity-50 disabled:text-[#cfcfcf] disabled:cursor-default duration-200'
                 onClick={() => {
                     navigate(`/${to}`)
                 }}

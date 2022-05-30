@@ -8,6 +8,7 @@ import Geometry from './pages/Geometry';
 import About from './pages/About';
 import Materials from './pages/Materials';
 import Results from './pages/Results';
+import { NotFound } from './pages/NotFound';
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
         <ColumnDataProvider>
         <Sidebar /> 
           <Routes>
+            <Route path="*" element={<NotFound />}></Route>
             <Route path="/" element={<Geometry />}></Route>
             <Route path="/materials" element={<Materials />}></Route>
             <Route path="/cross-section" element={<CrossSection />}></Route>

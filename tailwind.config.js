@@ -21,4 +21,12 @@ module.exports = {
     require('@tailwindcss/forms'),
     require('tailwind-scrollbar')
   ],
+  variants: {
+    extend: {
+      cursor: ['disabled'],
+      pointerEvents: ['disabled'],
+      backgroundColor: ['disabled'],
+      opacity: ['disabled']
+  },
+  },
 }
