@@ -30,6 +30,9 @@ export class ColumnSolver {
     rebarList: Rebar[],
     rectangleList: ConcreteRectangle[]
   ) {
+    if (length <= 0) {
+      throw "Comprimento inválido";
+    }
     const crossSectionValidator = new CrossSectionValidator();
     crossSectionValidator.validateRectanglesPosition(rectangleList);
     crossSectionValidator.validateRebarsPosition(rebarList, rectangleList);
@@ -41,8 +44,6 @@ export class ColumnSolver {
       criteria.getxDiscretizationsNumber(),
       criteria.getyDiscretizationsNumber()
     );
-
-    console.log(crossSection);
 
     const columnLength = length / 100;
     const nodesList = this.createNodeFiniteElementsList(

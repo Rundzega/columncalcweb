@@ -12,6 +12,7 @@ import { Rebar } from "../../model/Rebar";
 import { ConcreteRectangle } from "../../model/ConcreteRectangle";
 import { ColumnSolver } from "../../model/ColumnSolver";
 import { ColumnResults } from "../../model/ColumnResults";
+import successMsg from "../../utilities/sucessMsg";
 
 type CalculateButtonPRops = ButtonHTMLAttributes<HTMLButtonElement>;
 
@@ -114,6 +115,7 @@ function CalculateButton(props: CalculateButtonPRops) {
       className="w-full mt-6 appearance-none bg-brandPurple-300 rounded-[66px] text-white cursor-pointer text-xl font-semibold py-3 px-6 relative text-center flex justify-center duration-200 hover:bg-brandPurple-400 focus:outline-none focus:ring-2 focus:ring-white disabled:opacity-50 disabled:text-opacity-50 disabled:cursor-default"
       onClick={async () => {
         setIsCalculating(true);
+
         try {
           const columnResults = handleCalculateColumn();
           const results = {
@@ -146,13 +148,14 @@ function CalculateButton(props: CalculateButtonPRops) {
             myMaxSolicitingForces: columnResults.getMyMaxSolicitingForces(),
           };
           dispatch({ type: "update-results", payload: results });
-          console.log(state.results);
+          successMsg();
         } catch (err) {
           errorMsg("A verificação falhou", err as string);
         }
 
         setIsCalculating(false);
       }}
+      disabled={isCalculating}
       {...props}
     >
       {isCalculating ? <Loading /> : "CALCULAR"}

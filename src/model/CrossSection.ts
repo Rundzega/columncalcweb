@@ -53,6 +53,15 @@ export class CrossSection {
     numberOfDiscretizedX: number,
     numberOfDiscretizedY: number
   ) {
+    if (
+      rectanglesList.length == 0 ||
+      rebarsList.length == 0 ||
+      concreteClass == null ||
+      steelClass == null
+    ) {
+      throw "Dados de entrada da seção transversal inválidos";
+    }
+
     this.rectanglesList = rectanglesList;
     this.rebarsList = rebarsList;
     this.concreteClass = concreteClass;
