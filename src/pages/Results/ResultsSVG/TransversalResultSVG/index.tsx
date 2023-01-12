@@ -99,11 +99,12 @@ export function TransversalResultSVG({ ...props }: ITransversalResultsDisplay) {
         loopIndex++;
       }
 
-      console.log(afterAngle);
       const angleIndex = anglePoints.indexOf(afterAngle);
-      const beforeMx = diagramPoints[angleIndex - 1][0];
+      const beforeIndex =
+        angleIndex != 0 ? angleIndex - 1 : diagramPoints.length - 1;
+      const beforeMx = diagramPoints[beforeIndex][0];
       const afterMx = diagramPoints[angleIndex][0];
-      const beforeMy = diagramPoints[angleIndex - 1][1];
+      const beforeMy = diagramPoints[beforeIndex][1];
       const afterMy = diagramPoints[angleIndex][1];
       let safetyFactor;
 

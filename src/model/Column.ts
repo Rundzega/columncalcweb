@@ -211,7 +211,12 @@ export class Column {
         }
       }
     }
-    this.inverseStiffnessMatrix = mathjs.inv(stiffnessMatrix);
+    try {
+      this.inverseStiffnessMatrix = mathjs.inv(stiffnessMatrix);
+    } catch (err) {
+      // eslint-disable-next-line no-throw-literal
+      throw "Pilar instável devido às condições de contorno";
+    }
   }
 
   calculateDisplacements(
